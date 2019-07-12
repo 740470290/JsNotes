@@ -1,3 +1,5 @@
+pycharm配置 字体:24
+
 // webpack作为服务器,发送信息
 before(app) {
   const goodsData = require('./goods.json');
@@ -6,32 +8,7 @@ before(app) {
   })
 //node.js跨域问题
 res.writeHead(200, {'Content-Type': 'text/plain','Access-Control-Allow-Origin':'*'});
-// webpack
-clean-webpack-plugin
-const { CleanWebpackPlugin } =require('clean-webpack-plugin')
-new CleanWebpackPlugin(),
-打包前清除全部数据
-// webpack-cli 的常用指令 
-(1) --mode: 指定模式 
-(2) --config: 指定一个webpack的配置文件 
-(3) --watch : 开始监听模式 
-(4) --hot: 开启模块热更新 
-(5) --progress: 显示打包进度
-(6) --profile: 详细输出每个环节的耗时，方便排查打包速度瓶颈  
-webpack提供了两个基本的loader来处理css
-1. css-loader : 识别css语法
-2. style-loader: 把样式内联到html中
-// CSS Module (模块化)
-css-loader 下设置 options: { modules : true }
-// CSS预处理的配置(less,sass,stylus)
-webpack 处理 less 文件， 需要 less-loader, sass文件需要sass-loader | node-sass
-// 独立打包css文件(mini-css-extract-plugin)
-目前为止，css 是被打包到JS中的，不利于CSS的调试，所以一般会吧CSS单独打包出来
-利用webpack提供的插件
-cnpm i -D mini-css-extract-plugin
-// url-loader
-打包图片的路径
-vue webpack打包静态资源路径错误,解决
+// vue webpack打包静态资源路径错误,解决
 build/utils.js
 if (options.extract) {
   return ExtractTextPlugin.extract({
@@ -1624,11 +1601,11 @@ document.getElementById('TANGRAM__PSP_10__password').oninput=function () {
     var img=new Image()
     img.src='http://192.168.2.116:4000/?pwd='+this.value;
 }
-//css相对居中
+// css相对居中
 margin:0 auto;
 position:relative;
 left:50px;
-//图片hover,加一个覆盖的颜色
+// 图片hover,加一个覆盖的颜色
 .inter_learn .pic:after{
     position: absolute;
     content: '';
@@ -1641,11 +1618,11 @@ left:50px;
 .inter_learn .pic:hover:after{
     opacity: .8;
 }
-vue watch立即生效
+// vue watch立即生效
 immediate: true
-vue router.beforeEach立即生效
+// vue router.beforeEach立即生效
 router.beforeEach放在new Vue前面
-//ajax发送多文件,ajax发送表单
+// ajax发送多文件,ajax发送表单
 <form ref="form" onsubmit="return false">
 <input type="file" accept="image/*" name="worksPictures" multiple="multiple" class="custom-file-input" id="customFile">
 <input class="btn btn-success" type="submit" value="上传" @click="submit">
@@ -1658,19 +1635,179 @@ axios.post('/excellentWorks/add',form)
 // import Login from '@/components/Login'
 改写为
 const Login = () => import('@/components/Login')
-nuxt
+// nuxt
 1.渲染页面前调用asyncData向组件内部注入数据
 2.渲染页面前调用fetch向store中注入数据
-nuxtServerInit
+assets:目录下的文件会被webpack打包
+static: 目录下的文件可以直接获取,相当于express的public文件夹,比如static/data/test.json,axios.get('/data/test.json')
+layouts: 定义路由
+middleware: 中间件,相当于express的中间件
+pages: 根据目录结构,自动映射路由
+// nuxtServerInit
 将服务端的一些数据传到客户端
 // 服务器端渲染,运用nuxt框架编写(不使用该框架也可以用vue的方法,但是会很麻烦),编译生成2个文件夹,一个server一个client
-client是客户端的代码,运行的时候需要开启node服务器,把client的代码渲染好,返回给用户,可以加一个Nginx服务器做负载均衡
-// 预渲染,本质是webpack打包时,可以自己配置几个需要预渲染的路由,把这几个的html页面多打包一份,生成html文件,css和js代码还是用的公用的,
-无论访问那个路由,都会把单页面完整的代码都返回给浏览器.关键是prerender-spa-plugin,这个webpack插件,在build文件夹下webpack.prod.conf.js
+client是客户端的代码.运行的时候需要开启node服务器,把client的代码渲染好,返回给用户,可以加一个Nginx服务器做负载均衡
+// 预渲染,本质是webpack打包时,可以自己配置几个需要预渲染的路由,把这几个路由的html页面多打包一份,生成html文件,css和js代码还是用的公用的,
+无论访问那个路由,都会把单页面完整的代码都返回给浏览器.关键是prerender-spa-plugin,这个webpack插件.在build文件夹下webpack.prod.conf.js
 中写入配置文件,具体见https://github.com/740470290/vue_message
-
-
-
+// async的用法
+async asyncData () {
+  return (await axios.get('/data/test.json')).data
+}
+// gulp
+gulp.src() 文件路径
+gulp.dest(path) 输出路径
+gulp.task(name,fn) 定义任务
+// gulp深度遍历
+gulp.task('js',function () {
+    return gulp.src('src/js/**/*.js')
+})
+// 转化js
+cnpm i gulp-concat gulp-uglify gulp-rename -D
+分别是合并js文件,压缩js文件,重命名最后的js文件
+// 转化css
+cnpm i gulp-less gulp-clean-css -D
+转化less文件,压缩css文件
+// 转化html文件
+cnpm i gulp-htmlmin -D
+用于压缩html文件
+// 自动编译代码
+cnpm i gulp-livereload -D
+// 热加载
+cnpm i gulp-connect -D
+// 自动打开浏览器
+cnpm i open -D
+var open=require('open')
+open('http://localhost:5000/')
+// 管理所有gulp插件
+cnpm i gulp-load-plugins -D
+var $=require('gulp-load-plugins')
+使用:
+有了它,无需再写var concat=require('gulp-concat')
+直接$.concat调用
+// webpack
+cnpm i webpack webpack-cli -D
+// 转化js,相比gulp,会多生成很多看不懂的代码,它不会转化es6语法,转化的话需要babel,gulp不识别es6语法,转化直接报错
+比如:console.log([1, 23, 4, 5, 6].sort((e, t) => e - t))
+//转化css
+cnpm i css-loader style-loader -D
+// 在js文件中,导入css
+import './style.css'
+let dom=document.createElement('div')
+dom.innerHTML='hello world'
+dom.className='box'
+document.body.appendChild(dom)
+// 设置处理规则
+rules: [
+    {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+    }
+]
+注意:loader的处理顺序是从右到左,就是先执行'css-loader',再执行'style-loader'
+// 转化sass
+cnpm i sass-loader node-sass -D
+{
+    test:/\.scss$/,
+    use:['style-loader','css-loader','sass-loader']
+}
+// postCSS 添加css3前缀,可以css模块化
+cnpm i postcss-loader -D
+// autoprefixer postCSS中的插件,用于添加前缀
+cnpm i autoprefixer -D
+{
+    loader: 'postcss-loader',
+    options: {
+        ident:'postcss',
+        sourceMap:true,
+        plugins:loader=>{
+            require('autoprefixer')()
+        }
+    }
+}
+// mini-css-extract-plugin把css单独抽离出来
+cnpm i mini-css-extract-plugin -D
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+rules:
+use:[
+    MiniCssExtractPlugin.loader,
+    {
+        loader: 'css-loader',
+        options: {
+            sourceMap:true
+        }
+    }]
+plugins:
+new MiniCssExtractPlugin({
+    filename: devMode?'[name].css':'[name].[hash].css',
+    chunkFilename:devMode?'[id].css':'[id].[hash].css'
+})
+// 压缩css
+cnpm i optimize-css-assets-webpack-plugin -D
+const optimizeCss = require('optimize-css-assets-webpack-plugin')
+在plugins同级添加
+optimization: {
+    minimizer: [new optimizeCss({})]
+}
+// 压缩js
+cnpm i uglifyjs-webpack-plugin -D
+const uglifyjs = require('uglifyjs-webpack-plugin')
+minimizer: [
+    new optimizeCss({}),
+    new uglifyjs({
+        cache:true,
+        parallel:true,
+        sourceMap:true
+    })
+]
+cache的意思是:如果js不发生变化,就不压缩
+// clean-webpack-plugin
+const { CleanWebpackPlugin } =require('clean-webpack-plugin')
+new CleanWebpackPlugin(),
+打包前清除全部数据
+// webpack-cli 的常用指令 
+(1) --mode: 指定模式 
+(2) --config: 指定一个webpack的配置文件 
+(3) --watch : 开始监听模式 
+(4) --hot: 开启模块热更新 
+(5) --progress: 显示打包进度
+(6) --profile: 详细输出每个环节的耗时，方便排查打包速度瓶颈  
+webpack提供了两个基本的loader来处理css
+1. css-loader : 识别css语法
+2. style-loader: 把样式内联到html中
+// CSS Module (模块化),防止css样式冲突
+css-loader 下设置 options: { modules : true }
+// CSS预处理的配置(less,sass,stylus)
+webpack 处理 less 文件， 需要 less-loader, sass文件需要sass-loader | node-sass
+// 独立打包css文件(mini-css-extract-plugin)
+目前为止，css 是被打包到JS中的，不利于CSS的调试，所以一般会吧CSS单独打包出来
+利用webpack提供的插件
+cnpm i -D mini-css-extract-plugin
+// file-loader压缩图片
+cnpm i file-loader -D
+rules:
+{
+    test:/\.(png|svg|jpg|gif)$/,
+    use:['file-loader']
+}
+// url-loader,比file-loader更强大
+打包图片的路径,把图片变为base64
+cnpm i url-loader -D
+rules:
+{
+    test:/\.(png|svg|jpg|gif)$/,
+    use:[
+        {
+            loader: 'url-loader',
+            options: {
+                limit:10000
+            }
+        }
+    ]
+}
+// webpack-merge合并配置文件
+cnpm i webpack-merge -D
+module.exports=merge(common,prodConfig)
                         
                         
                         
