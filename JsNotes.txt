@@ -1636,15 +1636,31 @@ axios.post('/excellentWorks/add',form)
 改写为
 const Login = () => import('@/components/Login')
 // nuxt
-1.渲染页面前调用asyncData向组件内部注入数据
+1.组件加载前调用asyncData向组件内部注入数据
 2.渲染页面前调用fetch向store中注入数据
+// 这种写法,页面刷新不会报错,commit没有执行
+fetch ({ store, params }) {
+  axios.get('/data/test.json').then(res=>{
+    store.commit('changeName', res.data.name)
+  }).catch(err=>err)
+}
+// 这种写法页面刷新直接报错,两种写法在单页面跳转时没有问题
+async fetch ({ store, params }) {
+  let { data } = await axios.get('/data/test.json')
+  store.commit('changeName', data.name)
+ },
 assets:目录下的文件会被webpack打包
 static: 目录下的文件可以直接获取,相当于express的public文件夹,比如static/data/test.json,axios.get('/data/test.json')
 layouts: 定义路由
 middleware: 中间件,相当于express的中间件
 pages: 根据目录结构,自动映射路由
-// nuxtServerInit
+// nuxtServerInit,写在actions中会自动执行
 将服务端的一些数据传到客户端
+export const actions = {
+  nuxtServerInit({ commit}, { req }) {
+     commit('setToken', req.headers.cookie)
+  }
+}
 // 服务器端渲染,运用nuxt框架编写(不使用该框架也可以用vue的方法,但是会很麻烦),编译生成2个文件夹,一个server一个client
 client是客户端的代码.运行的时候需要开启node服务器,把client的代码渲染好,返回给用户,可以加一个Nginx服务器做负载均衡
 // 预渲染,本质是webpack打包时,可以自己配置几个需要预渲染的路由,把这几个路由的html页面多打包一份,生成html文件,css和js代码还是用的公用的,
