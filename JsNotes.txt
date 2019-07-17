@@ -1824,6 +1824,90 @@ rules:
 // webpack-merge合并配置文件
 cnpm i webpack-merge -D
 module.exports=merge(common,prodConfig)
+// nuxt服务器渲染,把数据库的内容放到html中,本质上是,在html底部插入一个scrpt标签,内容如下,在asyncData中生成的数据,会在__NUXT__的data属性中
+fetch和nuxtServerInit生成的数据存在store里,所以在state属性里
+window.__NUXT__={layout:"default",data:[{name:"iphone"}],error:null,state:{name:"chenjian"},serverRendered:true,logs:[]};
+// 首先,加一个express的中间件,重新开启一个端口,拿到数据,存储在vue.prototype里
+const vue = require('vue')
+app.use(function(req,res,next){
+  axios.get('http://127.0.0.1:8888').then(res=>{
+    console.log(res.data)
+    vue.prototype.cname=res.data.name
+    next()
+  }).catch(err=>err)
+})
+// 第一种方法:在store的index.js里写
+export const state = () => ({
+  name: 'chenjian'
+})
+export const mutations = {
+  setName (state,name) {
+    state.name=name
+  }
+}
+export const actions={
+  nuxtServerInit ({ commit }, { req }) {
+   console.log('=========================================')
+   console.log(this._vm.cname)
+      commit('setName', this._vm.cname)
+  }
+}
+// 第二种方法:
+fetch ({store}) {
+  store.commit('setName', store._vm.cname)    
+},
+// 第三种方法:
+asyncData ({store}){
+  return {name:store._vm.cname}
+},
+// 存在的问题:由于vue是单页应用,所以在第一次请求服务器,就返回了所有html,css,js文件,浏览器中路由跳转时,不会向服务器发送请求,除非ajax,
+这就意味着,如果有1000篇文章,需要在第一次请求时把所有文章返回过去
+但是,如果按照路由单独访问服务器,确实可以单独去渲染.比如page/1与page/2,写在浏览器地址栏按回车,可以得到不同的服务器渲染结果,
+这样一看,和预渲染没什么区别
+// Web Workers用法,html部分
+<h1>Hello world</h1>
+输出内容:<h2 id="app"></h2>
+<input type="text" id="msg">
+<button onclick="send()">send</button>
+<button onclick="stop()">stop</button>
+<script>
+var work=new Worker('test.js')
+work.onmessage=ev=>{
+ document.getElementById('app').innerHTML=ev.data
+}
+work.onerror=err=>{
+ work.terminate()
+ console.log(err.message)
+}
+function send(){
+ const msg=document.getElementById('msg')
+ work.postMessage(msg.value)
+}
+function stop(){
+ work.terminate()
+}
+</script>
+// test.js
+let i = 1
+function f(){
+ i++
+ self.postMessage(i)
+ setTimeout(f, 1000)
+}
+f()
+self.onmessage=ev=>{
+ postMessage(ev.data+'=======')
+}
+
+
+
+
+
+
+
+
+
+
                         
                         
                         
