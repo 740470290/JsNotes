@@ -104,8 +104,6 @@ return function () {
 var aa=f6()
 aa()//11
 aa()//12
-//数组去重
-[...new Set(array)]
 //短路逻辑,三目
 return x>100?'above 100':'below 100'
 return x>100?(x>200?'above 200':'batween 100-200'):'balow 100'
@@ -133,8 +131,6 @@ return x**2;
 //数组截取
 a=[1,2,3,4,5,6,7,8]
 a.length=3;//a=[1,2,3]
-//对于中文的截取
-'吉'.at(0)  // '吉'
 //返回布尔值
 includes(), startsWith(), endsWith()
 //repeat函数
@@ -1605,6 +1601,16 @@ document.getElementById('TANGRAM__PSP_10__password').oninput=function () {
 margin:0 auto;
 position:relative;
 left:50px;
+// 或者
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+// 或者
+外层
+position: absolute; left: 50%;
+里面
+position: relative; left: -50%; border: dotted red 1px;
 // 图片hover,加一个覆盖的颜色
 .inter_learn .pic:after{
     position: absolute;
@@ -1898,7 +1904,83 @@ f()
 self.onmessage=ev=>{
  postMessage(ev.data+'=======')
 }
-
+// 浏览器根据不同设备引入不同的css样式文件,当屏幕小于或等于600px时，将采用small.css样式来渲染Web页面
+<link rel="stylesheet" media="screen and (max-width:600px)" href="small.css" type="text/css" />
+// 当屏幕大于或等于900px时，将采用big.css样式来渲染Web页面
+<link rel="stylesheet" media="screen and (min-width:900px)" href="big.css" type="text/css"  />
+// css vw与rem自适应布局,vw与window.innerWidth对应,是浏览器窗口的宽度
+html{
+    font-size:100vw;
+}
+body{
+    margin: 0;
+}
+.btn {
+    width: 1rem;
+    height: .5rem;
+    line-height: .5rem;
+    font-size: .2rem;
+    background: #06c;
+    color: #fff;
+    border-radius: .05rem;
+    text-align: center;
+}
+1.vw：1vw等于视口宽度的1%
+2.vh：1vh等于视口高度的1%
+3.vmin：选取vw和vh中最小的那个
+4.vmax：选取vw和vh中最大的那个
+5.em:依赖父元素font-size
+6.rem:依赖html元素的font-size,root element
+7.ch:依赖当前字体和字体大小,font-family和font-size,比如一个盒子width: 40ch;那么它刚好是40个字的宽度
+8.ex:当前字体高度的一半,比如qob,它的高度就是o的高度,ex用于下标或者上标
+// less使用javascript
+less = {
+javascriptEnabled: true,
+env: "development",
+logLevel: 2,
+async: true,
+fileAsync: false,
+poll: 1000,
+functions: {},
+dumpLineNumbers: "comments",
+relativeUrls: false,
+globalVars: {
+var1: '"string value"',
+var2: 'regular value'
+},
+rootpath: ":/a.com/"
+};
+// less函数写法
+.c1{
+    background: red;
+}
+.c2(@color:blue){
+    color: @color;
+}
+.box{
+    .c1();
+    .c2(#fff);
+}
+// less嵌套
+body{
+    background: #eee;
+    .box{
+        background: red;
+        &:hover{
+            background: blue;
+        }
+    }
+}
+// 内置函数以及 import
+@import "./style";
+@num:2;
+.box{
+    width: @screen_width;
+    color: red+green+blue;
+    background: gray*.3;
+    border: 3px solid lighten(red,20%);// 颜色亮20%
+    box-sizing: border-box;
+}
 
 
 
