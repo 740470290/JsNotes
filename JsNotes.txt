@@ -1995,6 +1995,18 @@ body{
     border: 3px solid lighten(red,20%);// 颜色亮20%
     box-sizing: border-box;
 }
+// 运行在内存中node html css js
+var http = require('http');
+const html='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title><style>body{background-color:#337ab7;text-align:center;}</style></head><body><h1>helloworld</h1><script>alert("这是运行在内存的html!")</script></body></html>';
+http.createServer(function (req, res) {
+    if(req.url==='/'){
+    	res.writeHead(200, {'Content-Type': 'text/html'});
+    	res.end(html);
+    }else{
+    	res.end()
+    }
+}).listen(8888);	
+console.log('Server running at http://127.0.0.1:8888/');
 
 
 
