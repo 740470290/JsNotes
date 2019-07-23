@@ -2026,6 +2026,43 @@ http.createServer(function (req, res) {
     }
 }).listen(8888);	
 console.log('Server running at http://127.0.0.1:8888/');
+// 汇编语言编写hello world
+1.windows64位操作系统需要安装DOSBox,用于执行32位系统的代码
+2.mount d d:\dos
+d:
+上面两句用于进入指定目录
+3.安装masm
+masm.exe
+link.exe
+debug.exe
+4.编写1.asm
+DSEG    SEGMENT
+MESS    DB   'Hello,World!' ,0DH,0AH,24H
+DSEG    ENDS
+
+SSEG    SEGMENT PARA STACK 
+        DW  256 DUP(?)
+SSEG    ENDS
+
+CSEG    SEGMENT
+        ASSUME  CS:CSEG,DS:DSEG
+BEGIN:  MOV AX,DSEG
+        MOV DS,AX
+        MOV DX,OFFSET MESS
+        MOV AH,9
+
+        INT 21H
+        MOV AH,4CH
+        INT 21H
+CSEG    ENDS
+        END  BEGIN
+5.masm 1
+用于编译代码为源文件,生成1.OBJ
+link 1
+用于编译出可执行文件,生成1.EXE
+1
+输入1,回车,执行1.exe,打印出hello world!
+		
 
 
 
