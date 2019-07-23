@@ -2007,6 +2007,25 @@ http.createServer(function (req, res) {
     }
 }).listen(8888);	
 console.log('Server running at http://127.0.0.1:8888/');
+// 存在redis中
+1.确保安装了node,redis,并且开启了redis
+var http = require('http');
+const redis = require('redis'); 
+var client = redis.createClient(6379,'localhost');
+const html='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Document</title><style>body{background-color:#337ab7;text-align:center;}</style></head><body><h1>hello world</h1><script>document.body.innerHTML+="<h1>123</h1>"</script></body></html>';
+client.set('html',html);
+http.createServer(function (req, res) {
+    if(req.url==='/'){
+		client.get('html',function (err,val) {
+		    console.log("redis get hello err,v",err,val);
+		    res.writeHead(200, {'Content-Type': 'text/html'});
+    		res.end(val);
+		})
+    }else{
+    	res.end()
+    }
+}).listen(8888);	
+console.log('Server running at http://127.0.0.1:8888/');
 
 
 
