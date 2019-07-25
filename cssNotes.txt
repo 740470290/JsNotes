@@ -81,6 +81,7 @@
 	<style>
 		.app{
 			background-color: red;
+			/* 快速开始,慢速结束 */
 			/* transition:all .5s ease-out; */
 			text-align: center;
 			position: fixed;

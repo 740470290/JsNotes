@@ -1,0 +1,15 @@
+// 如何使用?
+1.windows,需要安装mingw编译器
+2.linux,自带gcc
+// 第一个c程序,第一行是头文件,相当于js中的import
+#include <stdio.h>
+// int表示这个函数的返回值是整数类型,main是程序的主入口,return 0是结束程序,\n是输出的时候换行,美观一点
+int main(){
+    printf("hello world \n");
+    return 0;
+}
+命名为hello.c,在Linux命令行输入
+gcc hello.c
+生成a.out,是编译后的文件
+./a.out
+运行文件,输出hello world

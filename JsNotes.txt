@@ -1340,43 +1340,43 @@ new Promise((resolve, reject) => {
 <div id="output"></div>
 <div id="progress"></div>
 <script>
-var filesList = document.getElementById("files-list");
-filesList.addEventListener("change", function(event){
- var info = "",
- output = document.getElementById("output"),
- progress = document.getElementById("progress"),
- files = event.target.files,
- type = "default",
- reader = new FileReader();
- if (/image/.test(files[0].type)){
- reader.readAsDataURL(files[0]);
- type = "image";
- } else {
- reader.readAsText(files[0]);
- type = "text";
- }
- reader.onerror = function(){
- output.innerHTML = "Could not read file, error code is " +
- reader.error.code;
- };
- reader.onprogress = function(event){
- if (event.lengthComputable){
- progress.innerHTML = event.loaded + "/" + event.total;
- }
- };
- reader.onload = function(){
- var html = "";
- switch(type){
- case "image":
- html = "<img src=\"" + reader.result + "\">";
- break;
- case "text":
- html = reader.result;
- break;
- }
- output.innerHTML = html;
- };
-});
+  var filesList = document.getElementById("files-list");
+  filesList.addEventListener("change", function (event) {
+    var info = "",
+      output = document.getElementById("output"),
+      progress = document.getElementById("progress"),
+      files = event.target.files,
+      type = "default",
+      reader = new FileReader();
+    if (/image/.test(files[0].type)) {
+      reader.readAsDataURL(files[0]);
+      type = "image";
+    } else {
+      reader.readAsText(files[0]);
+      type = "text";
+    }
+    reader.onerror = function () {
+      output.innerHTML = "Could not read file, error code is " +
+        reader.error.code;
+    };
+    reader.onprogress = function (event) {
+      if (event.lengthComputable) {
+        progress.innerHTML = event.loaded + "/" + event.total;
+      }
+    };
+    reader.onload = function () {
+      var html = "";
+      switch (type) {
+        case "image":
+          html = "<img src=\"" + reader.result + "\">";
+          break;
+        case "text":
+          html = reader.result;
+          break;
+      }
+      output.innerHTML = html;
+    };
+  });
 </script>
 //中间函数,f把接收的参数,都给a
  function a (a,b,c) {
@@ -2062,7 +2062,31 @@ link 1
 用于编译出可执行文件,生成1.EXE
 1
 输入1,回车,执行1.exe,打印出hello world!
-		
+// inline-block水平对齐出错问题
+因为默认的对齐方式是基线对齐,所以要在子元素加vertical-align: top;
+// ajax上传文件显示进度条
+<form action="" id="app">
+  上传文件:<input type="file" name="file">
+</form>
+<button onclick="f()">upload</button>
+<script>
+  const app=document.getElementById('app');
+      function f() {
+        let x = new XMLHttpRequest();
+        x.upload.addEventListener('progress',function(e){
+          var percent = Math.round(e.loaded * 100 / e.total);
+          console.log(percent)
+        },false);
+        x.open('POST', 'http://localhost:5000/upload', true);
+        const form = new FormData(app);
+        x.send(form);
+        x.onreadystatechange = function () {
+          if (x.readyState === 4 && x.status === 200) {
+            console.log('success');
+          }
+        }
+      }
+</script>
 
 
 
