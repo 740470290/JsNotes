@@ -517,7 +517,7 @@ appear
 "linebreak-style": [0,"error", "windows"],
 //redux-thunk
 本来的store只能传对象近去
-可以传入异步的方法,输出对象
+现在可以传入异步的方法,输出对象
 只是简单的升级action
 //redux-saga
 可以把异步的方法都放在一个saga文件中处理
@@ -1183,14 +1183,16 @@ xhr.ontimeout = function(){
 };
 //ajax跨域添加cookie
 对于跨域访问并需要伴随认证信息的请求，需要在 XMLHttpRequest 实例中指定 withCredentials 为 true（具体见下方jQuery ajax部分）。
-这个中间件你可以根据自己的需求进行构建，如果需要在请求中伴随认证信息（包含 cookie，session）那么你就需要指定 Access-Control-Allow-Credentials 为 true, 因为对于预请求来说如果你未指定该响应头，那么浏览器会直接忽略该响应。
+这个中间件你可以根据自己的需求进行构建，如果需要在请求中伴随认证信息（包含 cookie，session）那么你就需要指定 Access-Control-Allow-Credentials 为 true,
+因为对于预请求来说如果你未指定该响应头，那么浏览器会直接忽略该响应。
 在响应中指定 Access-Control-Allow-Credentials 为 true 时，Access-Control-Allow-Origin 不能指定为 *（这个一定要注意，我就是在这个地方调了好久）
 后置中间件只有在正常响应时才会被追加响应头，而如果出现异常，这时响应是不会经过中间件的。
 完整的无歧义的表述应该是这样：
 1.ajax会自动带上同源的cookie，不会带上不同源的cookie
 2. 可以通过前端设置withCredentials为true， 后端设置Header的方式让ajax自动带上不同源的cookie，但是这个属性对同源请求没有任何影响。会被自动忽略。
 3. 这是MDN对withCredentials的解释： MDN-withCredentials ，我接着解释一下同源。
-众所周知，ajax请求是有同源策略的，虽然可以应用CORS等手段来实现跨域，但是这并不是说这样就是“同源”了。ajax在请求时就会因为这个同源的问题而决定是否带上cookie，这样解释应该没有问题了吧，还不知道同源策略的，应该去谷歌一下看看。
+众所周知，ajax请求是有同源策略的，虽然可以应用CORS等手段来实现跨域，但是这并不是说这样就是“同源”了。ajax在请求时就会因为这个同源的问题而决定是否带上cookie，
+这样解释应该没有问题了吧，还不知道同源策略的，应该去谷歌一下看看。
 x.open('GET', f + u, true)
 x.withCredentials = true // 这句话是重点
 x.send()
@@ -2087,9 +2089,45 @@ link 1
         }
       }
 </script>
-
-
-
+// 函数的自调
+var a=0;
+function f() {
+  a++;
+  console.log(a);
+  a<10&&setTimeout(f,20)
+}
+f()
+// webpack打包vendor文件太大问题,在webpack配置文件中发现,vendor中都是node_modules中的第三方包
+output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+  },
+  externals: {
+    'vue': 'Vue',
+    'vue-router': 'VueRouter',
+    'vuex': 'Vuex',
+    'axios': 'axios',
+  },
+  在webpack配置中设置externals,打包完,在index.html中加入cdn引入
+<script src="//cdn.bootcss.com/vue/2.2.5/vue.min.js"></script>
+<script src="//cdn.bootcss.com/vue-router/2.3.0/vue-router.min.js"></script>
+<script src="//cdn.bootcss.com/vuex/2.2.1/vuex.min.js"></script>
+<script src="//cdn.bootcss.com/axios/0.15.3/axios.min.js"></script>
+// switch的用法
+function test(i){
+    switch (i){
+        case 1:
+            return 1;
+        case 2:
+            return 2;
+        default:
+            return 0;
+    }
+}
+console.log(test(1))
+// git新建远程仓库
+https://www.cnblogs.com/gaoyuechen/p/10336738.html
 
 
 

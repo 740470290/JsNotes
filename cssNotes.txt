@@ -72,7 +72,6 @@
     <div class="c3">6</div>
 </div>
 // 模拟苹果电脑的弹出动画
-740470290@qq.com
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -145,7 +144,7 @@
 	</script>
 </body>
 </html>
-// 3中loading动画
+// 3种loading动画
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -325,6 +324,58 @@
 	</div>
 </body>
 </html>
+// svg技术
+ <style>
+    @keyframes rotate {
+      100%{
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+<svg width="160px" height="160px" viewBox="0 0 16 16" version="1.1" title=""><title>菜单icon</title>
+  <desc>Created with Sketch.</desc>
+  <g id="菜单icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.639999986">
+    <g>
+      <rect id="矩形" fill="red" opacity="0" x="0" y="0" width="16" height="16"></rect>
+      <rect id="Rectangle-Copy-9" fill="red" x="2" y="12" width="12" height="1.5"></rect>
+      <rect id="Rectangle-Copy-10" fill="#000000" x="2" y="7" width="12" height="1.5"></rect>
+      <rect id="Rectangle-Copy-11" fill="#000000" x="2" y="2" width="12" height="1.5"></rect>
+    </g>
+  </g>
+</svg>
+<svg width="160" height="160">
+  <ellipse cx="80" cy="80" rx="75"
+           ry="80"
+           fill="red"
+  ></ellipse>
+</svg>
+<svg width="160" height="160">
+  <line
+    x1="0"
+    y1="0"
+    x2="50"
+    y2="50"
+    stroke-width="5"
+    stroke="red"
+  ></line>
+</svg>
+<svg width="160" height="160" style="animation: rotate 3s infinite linear">
+  <polyline
+    points="0 0 80 80 0 160"
+    stroke-width="5"
+    stroke="red"
+    fill="#fff"
+  ></polyline>
+</svg>
+<svg width="160" height="160">
+  <polygon
+    points="0 0 50 50 0 100"
+    fill="red"
+  ></polygon>
+</svg>
+</body>
 
 
 
