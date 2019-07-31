@@ -1,13 +1,23 @@
 netstat -ntlp    查看所有tcp端口
+cat /etc/redhat-release    查看centos版本
 curl http://127.0.0.1:8080    爬虫
 wget http://127.0.0.1:8080    爬虫并保存为index.html
 wget http://106.14.12.44:80 --no-check-certificate  对于https的网站需要加上后面的内容
 find / -name 'nginx.conf'   查找文件
+firewall-cmd --state    查看防火墙
 
 // yum
 yum list installed    已经安装的包
 yum list installed | grep ngnix   是否安装某个包
-
+// shell脚本
+#!/bin/sh
+count=0
+while [ $count -lt 10 ]
+    do
+        echo $count
+        count=$((count + 1))
+        sleep 2s
+    done
 
 
 
@@ -18,7 +28,9 @@ docker ps	显示当前容器状态
 docker ps -l	last,最新的容器
 docker ps -q    只显示容器的id
 docker ps -a	all,所有开启过的容器
+docker cp [name]:容器内路径 主机目标路径
 docker run -it [name]    开启镜像
+docker run -d -p 6666:8080 tomcat    后台开启
 docker start [name]    开启容器
 docker stop [name or hash]		结束
 docker kill [name | hash]	强制结束
@@ -35,3 +47,6 @@ docker run -it -p 8080:8080 tomcat
 docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2
 提交一个自己的镜像
 docker run -it -p 8080:8080 chenjian/mytomcat:1.2    开启
+// docker容器数据卷    数据的持久化,共享数据
+docker run -it -v 宿主机绝对路径:容器内绝对路径 镜像名
+docker run -it -v 宿主机绝对路径:容器内绝对路径:ro 镜像名    只读模式,只有宿主机可以写

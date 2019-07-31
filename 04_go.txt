@@ -1,0 +1,23 @@
+// 安装,去国内的go官网下载安装包
+// 第一个程序
+package main
+import "fmt"
+func main(){
+    fmt.Println("hello world")
+}
+go build hello.go    编译出.exe可执行文件
+// 定义常量
+package main
+import "unsafe"
+const (
+    a = "abc"
+    b = len(a)
+    c = unsafe.Sizeof(a)
+)
+func main(){
+    println(a,b,c)
+}
+
+
+
+

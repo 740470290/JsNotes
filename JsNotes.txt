@@ -2176,6 +2176,18 @@ nginx -t
 nginx -t -c /etc/nginx/nginx.conf   检查nginx.conf语法是否正确,-c是指定位置
 nginx -s reload    重载配置文件
 nginx -s stop    停止服务
+// npm搭建本地仓库
+cnpm i sinopia -g    安装sinopia
+sinopia    运行sinopia
+cnpm i nrm -g    安装nrm
+nrm ls    查看所有仓库
+nrm add [name] [url]    添加仓库
+nrm use [name]    使用仓库
+sinopia的安装需要python2.7环境,高版本的nodejs,g++
+npm adduser    添加用户
+npm init -y
+npm publish    发布第一个版本1.0.0
+npm i [name] --registry https://registry.npm.taobao.org
 
 
 
