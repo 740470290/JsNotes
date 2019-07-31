@@ -2128,6 +2128,56 @@ function test(i){
 console.log(test(1))
 // git新建远程仓库
 https://www.cnblogs.com/gaoyuechen/p/10336738.html
+核心原理是--bare,生成空的仓库,文件夹名子类似runoob.git
+// nginx 负载均衡
+只需要在配置文件中简单的配置一下即可,5行代码左右
+upstream 127.0.0.1{
+	ip_hash;
+	server 127.0.0.1:4000 weight=1 max_fails=3 fail_timeout=20s;
+	server 127.0.0.1:5000 weight=1 max_fails=3 fail_timeout=20s;
+}
+server {
+    listen       80;
+    server_name  localhost;
+    location / {
+     #   root   html;
+     #   index  index.html index.htm;
+     	proxy_pass http://127.0.0.1;
+    }
+在location下,改为proxy_pass,即可把请求转发到该地址(http://127.0.0.1)
+upstream可以把http://127.0.0.1的请求分发到下面的2个地址,分发规则有下面几种:
+1.默认
+2.设置weight属性,比如1:10,那么他们处理请求个数的比例就是1:10
+3.由于session的问题,可以设置把同一个ip的用户请求只转发给某个服务器,
+这样就保证session不会丢失
+注意:负载均衡配置是分2步,第一步proxy_pass可以把请求转发掉,可以用来跨域
+第二步upstream则是负载均衡,就是把请求发到不同的服务器,
+负载均衡至少要3台服务器,一台转发服务器,二台处理请求的服务器
+// nginx缓存功能
+location / {
+    root   html;
+    index  index.html index.htm;
+    expires 30d;
+ #	proxy_pass http://127.0.0.1;
+}
+location ~ \.(jpg|png)$ {
+    expires 30d;
+} 
+使用expires属性,30d就是30天,可以用正则精确匹配
+gzip  on;
+gzip_http_version 1.0;
+gzip_disable 'MSIE [1-6].';
+gzip_types *;
+服务器压缩开启
+http协议版本
+如果是IE6之前的浏览器,就不用gzip
+需要压缩的文件格式
+nginx -t
+nginx -t -c /etc/nginx/nginx.conf   检查nginx.conf语法是否正确,-c是指定位置
+nginx -s reload    重载配置文件
+nginx -s stop    停止服务
+
+
 
 
 

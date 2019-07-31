@@ -1,0 +1,37 @@
+netstat -ntlp    查看所有tcp端口
+curl http://127.0.0.1:8080    爬虫
+wget http://127.0.0.1:8080    爬虫并保存为index.html
+wget http://106.14.12.44:80 --no-check-certificate  对于https的网站需要加上后面的内容
+find / -name 'nginx.conf'   查找文件
+
+// yum
+yum list installed    已经安装的包
+yum list installed | grep ngnix   是否安装某个包
+
+
+
+
+// docker
+docker三大特征:镜像,容器,仓库
+docker pull需要阿里云镜像加速,在docker配置文件中写入镜像地址
+docker ps	显示当前容器状态
+docker ps -l	last,最新的容器
+docker ps -q    只显示容器的id
+docker ps -a	all,所有开启过的容器
+docker run -it [name]    开启镜像
+docker start [name]    开启容器
+docker stop [name or hash]		结束
+docker kill [name | hash]	强制结束
+docker inspect [name | hash]	打印具体信息
+docker top [name | hash]	查看状态
+ctrl+p+q	退出当前docker
+docker attach [name]	退出后重新进入
+docker exec -it 22 ls    在容器外执行容器内的命令
+docker exec -it 22 /bin/bash	进去容器
+docker pull [name]    安装镜像
+docker images	查看镜像
+docker run -it -p 8080:8080 tomcat    
+-i  交互,-t   终端,-p   指定端口,-P随机端口
+docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2
+提交一个自己的镜像
+docker run -it -p 8080:8080 chenjian/mytomcat:1.2    开启
