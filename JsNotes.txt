@@ -2188,6 +2188,11 @@ npm adduser    添加用户
 npm init -y
 npm publish    发布第一个版本1.0.0
 npm i [name] --registry https://registry.npm.taobao.org
+安装g++,make
+yum install -y gcc-c++
+yum install -y make
+// 导出docker
+https://www.imooc.com/article/48652
 
 
 
