@@ -36,6 +36,8 @@ docker三大特征:镜像,容器,仓库
 // 阿里云镜像加速器地址
 https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
 docker pull    需要阿里云镜像加速,在docker配置文件中写入镜像地址
+docker search    查找镜像
+docker pull mysql:5.6    指定版本
 docker ps	显示当前容器状态
 docker ps -l	last,最新的容器
 docker ps -q    只显示容器的id
@@ -43,6 +45,7 @@ docker ps -a	all,所有开启过的容器
 docker cp [name]:容器内路径 主机目标路径
 docker run -it --name dc01 [name]    开启镜像,并指定名称
 docker run -d -p 6666:8080 tomcat    后台开启
+-e MYSQL_ROOT_PADDWORD=123456    初始化root用户的密码
 docker start [name]    开启容器
 docker stop [name or hash]		结束
 docker kill [name | hash]	强制结束
@@ -52,6 +55,7 @@ ctrl+p+q	退出当前docker
 docker attach [name]	退出后重新进入
 docker exec -it 22 ls    在容器外执行容器内的命令
 docker exec -it 22 /bin/bash	进去容器
+docker exec [name] sh -c ' exec mysqldump --all-databases -uroot -p "123456" ' > /root/all-databases.sql    把容器内的数据库备份出来
 docker pull [name]    安装镜像
 docker images	查看镜像
 docker run -it -p 8080:8080 tomcat    
@@ -94,7 +98,24 @@ RUN    执行的命令
 EXPOSE	  暴露的端口
 CMD    如果在run语句后面加命令,会覆盖它,多个CMD语句时,只执行最后一个
 ENTRYPOINT    多个CMD语句时,会追加
-
+ONBUILD    FROM chenjian/volum:1.7,如果Dockerfile文件继承有ONBUILD的Dockerfile,那么在build的时候,每次build都会执行这个语句
+COPY    拷贝
+ADD    拷贝+解压
+==================
+FROM centos
+RUN yum -y install curl
+CMD ["curl","-s","https://ip.cn"]
+==================
+FROM centos
+RUN yum -y install curl
+ENTRYPOINT ["curl","-s","https://ip.cn"]
+==================
+FROM centos
+RUN yum -y install curl
+ENTRYPOINT ["curl","-s","https://ip.cn"]
+ONBUILD RUN echo "father images onbuild--------886"
+==================
+// docker权限不够的问题,添加 docker run --privileged=true
 
 // CentOS 6.5 root启动docker Cannot connect to the Docker daemon,问题
  yum-config-manager –enable public_ol6_latest
