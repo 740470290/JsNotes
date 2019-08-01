@@ -45,7 +45,7 @@ docker pull [name]    安装镜像
 docker images	查看镜像
 docker run -it -p 8080:8080 tomcat    
 -i  交互,-t   终端,-p   指定端口,-P随机端口
-docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2
+docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2    50是容器的id
 提交一个自己的镜像
 docker run -it -p 8080:8080 chenjian/mytomcat:1.2    开启
 // docker容器数据卷    数据的持久化,共享数据
