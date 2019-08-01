@@ -1,12 +1,12 @@
-// °²×°,È¥¹úÄÚµÄgo¹ÙÍøÏÂÔØ°²×°°ü
-// µÚÒ»¸ö³ÌĞò
+// å®‰è£…,å»å›½å†…çš„goå®˜ç½‘ä¸‹è½½å®‰è£…åŒ…
+// ç¬¬ä¸€ä¸ªç¨‹åº
 package main
 import "fmt"
 func main(){
     fmt.Println("hello world")
 }
-go build hello.go    ±àÒë³ö.exe¿ÉÖ´ĞĞÎÄ¼ş
-// ¶¨Òå³£Á¿
+go build hello.go    ç¼–è¯‘å‡º.exeå¯æ‰§è¡Œæ–‡ä»¶
+// å®šä¹‰å¸¸é‡
 package main
 import "unsafe"
 const (

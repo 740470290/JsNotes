@@ -2193,6 +2193,7 @@ yum install -y gcc-c++
 yum install -y make
 // 导出docker
 https://www.imooc.com/article/48652
+npm unpublish [name]    删除包
 
 
 

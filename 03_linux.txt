@@ -1,16 +1,21 @@
-netstat -ntlp    ²é¿´ËùÓĞtcp¶Ë¿Ú
-cat /etc/redhat-release    ²é¿´centos°æ±¾
-curl http://127.0.0.1:8080    ÅÀ³æ
-wget http://127.0.0.1:8080    ÅÀ³æ²¢±£´æÎªindex.html
-wget http://106.14.12.44:80 --no-check-certificate  ¶ÔÓÚhttpsµÄÍøÕ¾ĞèÒª¼ÓÉÏºóÃæµÄÄÚÈİ
-find / -name 'nginx.conf'   ²éÕÒÎÄ¼ş
-firewall-cmd --state    ²é¿´·À»ğÇ½
-yum install gcc-c++    °²×°g++
-
+netstat -ntlp    æŸ¥çœ‹æ‰€æœ‰tcpç«¯å£
+cat /etc/redhat-release    æŸ¥çœ‹centosç‰ˆæœ¬
+uname -a    æŸ¥çœ‹å†…æ ¸ç‰ˆæœ¬
+curl http://127.0.0.1:8080    çˆ¬è™«
+wget http://127.0.0.1:8080    çˆ¬è™«å¹¶ä¿å­˜ä¸ºindex.html
+wget http://106.14.12.44:80 --no-check-certificate  å¯¹äºhttpsçš„ç½‘ç«™éœ€è¦åŠ ä¸Šåé¢çš„å†…å®¹
+find / -name 'nginx.conf'   æŸ¥æ‰¾æ–‡ä»¶
+firewall-cmd --state    æŸ¥çœ‹é˜²ç«å¢™
+yum install gcc-c++    å®‰è£…g++
+service docker status    æŸ¥çœ‹ç¨‹åºçŠ¶æ€
+service docker start	å¼€å¯
+service docker restart    é‡å¯
+cd /etc/sysconfig/network-scripts/    é…ç½®ip
+vi ifcfg-eth0    æ‰“å¼€ipé…ç½®æ–‡ä»¶
 // yum
-yum list installed    ÒÑ¾­°²×°µÄ°ü
-yum list installed | grep ngnix   ÊÇ·ñ°²×°Ä³¸ö°ü
-// shell½Å±¾
+yum list installed    å·²ç»å®‰è£…çš„åŒ…
+yum list installed | grep ngnix   æ˜¯å¦å®‰è£…æŸä¸ªåŒ…
+// shellè„šæœ¬
 #!/bin/sh
 count=0
 while [ $count -lt 10 ]
@@ -23,37 +28,81 @@ while [ $count -lt 10 ]
 
 
 // docker
-dockerÈı´óÌØÕ÷:¾µÏñ,ÈİÆ÷,²Ö¿â
-docker pullĞèÒª°¢ÀïÔÆ¾µÏñ¼ÓËÙ,ÔÚdockerÅäÖÃÎÄ¼şÖĞĞ´Èë¾µÏñµØÖ·
-docker ps	ÏÔÊ¾µ±Ç°ÈİÆ÷×´Ì¬
-docker ps -l	last,×îĞÂµÄÈİÆ÷
-docker ps -q    Ö»ÏÔÊ¾ÈİÆ÷µÄid
-docker ps -a	all,ËùÓĞ¿ªÆô¹ıµÄÈİÆ÷
-docker cp [name]:ÈİÆ÷ÄÚÂ·¾¶ Ö÷»úÄ¿±êÂ·¾¶
-docker run -it [name]    ¿ªÆô¾µÏñ
-docker run -d -p 6666:8080 tomcat    ºóÌ¨¿ªÆô
-docker start [name]    ¿ªÆôÈİÆ÷
-docker stop [name or hash]		½áÊø
-docker kill [name | hash]	Ç¿ÖÆ½áÊø
-docker inspect [name | hash]	´òÓ¡¾ßÌåĞÅÏ¢
-docker top [name | hash]	²é¿´×´Ì¬
-ctrl+p+q	ÍË³öµ±Ç°docker
-docker attach [name]	ÍË³öºóÖØĞÂ½øÈë
-docker exec -it 22 ls    ÔÚÈİÆ÷ÍâÖ´ĞĞÈİÆ÷ÄÚµÄÃüÁî
-docker exec -it 22 /bin/bash	½øÈ¥ÈİÆ÷
-docker pull [name]    °²×°¾µÏñ
-docker images	²é¿´¾µÏñ
+// centos 6å®‰è£…
+yum install -y epel-release
+yum install -y docker-io
+service docker start
+dockerä¸‰å¤§ç‰¹å¾:é•œåƒ,å®¹å™¨,ä»“åº“
+// é˜¿é‡Œäº‘é•œåƒåŠ é€Ÿå™¨åœ°å€
+https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
+docker pull    éœ€è¦é˜¿é‡Œäº‘é•œåƒåŠ é€Ÿ,åœ¨dockeré…ç½®æ–‡ä»¶ä¸­å†™å…¥é•œåƒåœ°å€
+docker ps	æ˜¾ç¤ºå½“å‰å®¹å™¨çŠ¶æ€
+docker ps -l	last,æœ€æ–°çš„å®¹å™¨
+docker ps -q    åªæ˜¾ç¤ºå®¹å™¨çš„id
+docker ps -a	all,æ‰€æœ‰å¼€å¯è¿‡çš„å®¹å™¨
+docker cp [name]:å®¹å™¨å†…è·¯å¾„ ä¸»æœºç›®æ ‡è·¯å¾„
+docker run -it --name dc01 [name]    å¼€å¯é•œåƒ,å¹¶æŒ‡å®šåç§°
+docker run -d -p 6666:8080 tomcat    åå°å¼€å¯
+docker start [name]    å¼€å¯å®¹å™¨
+docker stop [name or hash]		ç»“æŸ
+docker kill [name | hash]	å¼ºåˆ¶ç»“æŸ
+docker inspect [name | hash]	æ‰“å°å…·ä½“ä¿¡æ¯
+docker top [name | hash]	æŸ¥çœ‹çŠ¶æ€
+ctrl+p+q	é€€å‡ºå½“å‰docker
+docker attach [name]	é€€å‡ºåé‡æ–°è¿›å…¥
+docker exec -it 22 ls    åœ¨å®¹å™¨å¤–æ‰§è¡Œå®¹å™¨å†…çš„å‘½ä»¤
+docker exec -it 22 /bin/bash	è¿›å»å®¹å™¨
+docker pull [name]    å®‰è£…é•œåƒ
+docker images	æŸ¥çœ‹é•œåƒ
 docker run -it -p 8080:8080 tomcat    
--i  ½»»¥,-t   ÖÕ¶Ë,-p   Ö¸¶¨¶Ë¿Ú,-PËæ»ú¶Ë¿Ú
-docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2    50ÊÇÈİÆ÷µÄid
-Ìá½»Ò»¸ö×Ô¼ºµÄ¾µÏñ
-docker run -it -p 8080:8080 chenjian/mytomcat:1.2    ¿ªÆô
-// dockerÈİÆ÷Êı¾İ¾í    Êı¾İµÄ³Ö¾Ã»¯,¹²ÏíÊı¾İ
-docker run -it -v ËŞÖ÷»ú¾ø¶ÔÂ·¾¶:ÈİÆ÷ÄÚ¾ø¶ÔÂ·¾¶ ¾µÏñÃû
-docker run -it -v ËŞÖ÷»ú¾ø¶ÔÂ·¾¶:ÈİÆ÷ÄÚ¾ø¶ÔÂ·¾¶:ro ¾µÏñÃû    Ö»¶ÁÄ£Ê½,Ö»ÓĞËŞÖ÷»ú¿ÉÒÔĞ´
+-i  äº¤äº’,-t   ç»ˆç«¯,-p   æŒ‡å®šç«¯å£,-Péšæœºç«¯å£
+docker commit -a="cj" -m="tomcat without docs" 50 chenjian/mytomcat:1.2    50æ˜¯å®¹å™¨çš„id
+æäº¤ä¸€ä¸ªè‡ªå·±çš„é•œåƒ
+docker save zhaoolee-qs:1.0 > qs01.tar    ä¿å­˜ä¸ºå‹ç¼©æ–‡ä»¶
+scp ./qs01.tar root@192.168.214.162:/qs01.tar    è¿œç¨‹ä¼ è¾“åˆ°æœåŠ¡å™¨
+docker load < qs01.tar    åŠ è½½é•œåƒ
+docker run -it -p 8080:8080 chenjian/mytomcat:1.2    å¼€å¯,å¯ä»¥åŒæ—¶æŒ‡å®šå¤šä¸ªç«¯å£
+// dockerå®¹å™¨æ•°æ®å·    æ•°æ®çš„æŒä¹…åŒ–,å…±äº«æ•°æ®
+docker run -it -v å®¿ä¸»æœºç»å¯¹è·¯å¾„:å®¹å™¨å†…ç»å¯¹è·¯å¾„ é•œåƒå
+docker run -it -v å®¿ä¸»æœºç»å¯¹è·¯å¾„:å®¹å™¨å†…ç»å¯¹è·¯å¾„:ro é•œåƒå    åªè¯»æ¨¡å¼,åªæœ‰å®¿ä¸»æœºå¯ä»¥å†™
+docker build -f /myvolum/Dockerfile -t chenjian/volum .    æŠŠ/myvolum/Dockerfileæ–‡ä»¶,åšæˆä¸€ä¸ªchenjian/volumé•œåƒ
+// Dockerfileçš„å†…å®¹
+FROM centos
+VOLUME /data
+CMD echo "success======="
+CMD /bin/bash
+docker run -it [name]
+docker inspect [name]
+"/data": "/var/lib/docker/volumes/ddc07776a5bdb22ac87f16f61857054e5e40cce3430e0ef5e9d47fc968a40d76/_data"    å®¿ä¸»æœºä¸Šè‡ªåŠ¨æŒ‚è½½çš„ç›®å½•
+// å®¹å™¨æ•°æ®å·,å®¿ä¸»æœº==>dc01==>dc02    æ•°æ®ä¼šå¤‡ä»½3ä»½,å³ä½¿dc01è¢«åˆ é™¤äº†,å…¶ä½™å®¹å™¨é—´ä¹Ÿå¯ä»¥å…±äº«
+docker run -it --name dc01 [name]
+touch dc01_add.txt
+docker run -it --name dc02 --volumes-from dc01 chenjian/volum    æ–°å»ºä¸€ä¸ªå®¹å™¨ç»§æ‰¿äºdc01
+touch dc02_add.txt
+==================
+FROM centos
+ENV mypath /tmp    
+WORKDIR $mypath
+RUN yum -y install vim
+RUN yum -y install net-tools
+EXPOSE 8080
+CMD /bin/bash
+==================
+ENV    ç¯å¢ƒå˜é‡
+WORKDIR    è¿›å»åçš„é»˜è®¤æ‰“å¼€ç›®å½•
+RUN    æ‰§è¡Œçš„å‘½ä»¤
+EXPOSE	  æš´éœ²çš„ç«¯å£
+CMD    å¦‚æœåœ¨runè¯­å¥åé¢åŠ å‘½ä»¤,ä¼šè¦†ç›–å®ƒ,å¤šä¸ªCMDè¯­å¥æ—¶,åªæ‰§è¡Œæœ€åä¸€ä¸ª
+ENTRYPOINT    å¤šä¸ªCMDè¯­å¥æ—¶,ä¼šè¿½åŠ 
 
 
-vim /etc/sysconfig/iptables    ±à¼­·À»ğÇ½ÅäÖÃÎÄ¼ş
--A INPUT -p tcp -m tcp --dport 80 -j ACCEPT    ·ÀÖ¹·À»ğÇ½Õ¼ÓÃ80¶Ë¿Ú
--A INPUT -m state --state NEW -m tcp -p tcp --dport 4873 -j ACCEPT    ¿ª·Å 4873 ¶Ë¿Ú
-/etc/init.d/iptables restart    ÖØÆôÒ»ÏÂ·À»ğÇ½
+// CentOS 6.5 rootå¯åŠ¨docker Cannot connect to the Docker daemon,é—®é¢˜
+ yum-config-manager â€“enable public_ol6_latest
+ yum install device-mapper-event-libs
+
+
+
+vim /etc/sysconfig/iptables    ç¼–è¾‘é˜²ç«å¢™é…ç½®æ–‡ä»¶
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT    é˜²æ­¢é˜²ç«å¢™å ç”¨80ç«¯å£
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 4873 -j ACCEPT    å¼€æ”¾ 4873 ç«¯å£
+/etc/init.d/iptables restart    é‡å¯ä¸€ä¸‹é˜²ç«å¢™
