@@ -6,6 +6,7 @@ wget http://127.0.0.1:8080    爬虫并保存为index.html
 wget http://106.14.12.44:80 --no-check-certificate  对于https的网站需要加上后面的内容
 find / -name 'nginx.conf'   查找文件
 firewall-cmd --state    查看防火墙
+service iptables status    查看防火墙(centos6)
 yum install gcc-c++    安装g++
 service docker status    查看程序状态
 service docker start	开启
@@ -15,6 +16,7 @@ vi ifcfg-eth0    打开ip配置文件
 // yum
 yum list installed    已经安装的包
 yum list installed | grep ngnix   是否安装某个包
+yum list | grep [name]    软件列表
 // shell脚本
 #!/bin/sh
 count=0
@@ -24,6 +26,8 @@ while [ $count -lt 10 ]
         count=$((count + 1))
         sleep 2s
     done
+============================
+systemctl list-unit-files --type=service    查看服务列表里有没有这个服务
 
 
 
@@ -127,3 +131,260 @@ vim /etc/sysconfig/iptables    编辑防火墙配置文件
 -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT    防止防火墙占用80端口
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4873 -j ACCEPT    开放 4873 端口
 /etc/init.d/iptables restart    重启一下防火墙
+
+// vim
+yy    copy一行
+5yy    copy下面5行
+dd    删除当前行
+5dd    删除下面5行
+/[keyword]    查找,n查找下一个
+:set nu    显示行号
+:set nonu    不显示行号
+gg    到第一行
+5gg    到第5行
+G    到最后一行
+u    撤销操作
+sync    把内存的数据同步到磁盘
+shutdown -h now    关机
+shutdown -h 1    1分钟后关机
+shutdown -r now    重启
+halt    关机
+poweroff    关机
+reboot    重启
+// 用户管理
+useradd [name]    添加用户
+useradd -d [目录] [name]    添加用户,并分组
+passwd [name]    给用户设置密码
+userdel [name]    删除用户,会保留家目录
+userdel -r [name]    删除用户以及家目录
+id [name]    查看用户信息
+su - [name]    切换用户
+groupadd [name]    添加组
+groupdel [name]    删除组
+useradd -g [group] [name]    添加用户,并指定组
+usemod -g [group] [name]    修改组
+cat /etc/passwd    查看用户
+cat /etc/inittab    查看运行级别
+init 5    到图形界面
+init 3    到命令行界面
+init 1    进入单用户模式,可以修改root密码
+cp -r [name] [name]    递归整个文件夹
+\cp -r [name] [name]    递归整个文件夹,强制覆盖
+cat /etc/inittab -n | more    -n带行号,more分页显示
+less /etc/inittab    查看文件,用于看大型文件
+echo $PATH		输出环境变量
+head -n 5 /etc/inittab    看前5行,默认10行
+tail -f a.txt		监控文件的变化,一旦追加,会打印出来
+ll >> /root/a.txt    追加内容,把目录结构追加进去
+ln -s /root linkToRoot    软链接,相当于windows的快捷方式
+history		查看历史记录
+date -s "2019-9-9 11:11:11"		设置时间
+man ls		查看帮助
+help ls		查看帮助
+cal 2020	查看2020的全部日历
+find /root -user root		按用户查找文件
+find /root -size +20M		按大小查
+find /root -size -20M		按大小查,小于20M
+updatedb	创建locate数据库
+locate hello.txt	查询文件
+cat hello.txt | grep yes    查找包含yes的行	
+cat hello.txt | grep yes -n    查找包含yes的行,显示行数	
+cat hello.txt | grep yes -ni    查找包含yes的行,显示行数,不区分大小写
+gzip	压缩
+gunzip		解压
+zip -r mypackage.zip /home/
+unzip -d /opt/tmp/ mypackage.zip
+tar -zcvf a.tar.gz a1.txt a2.txt	把a1.txt a2.txt压缩为a.tar.gz
+tar zxf a.tar.gz		解压
+ls -ahl		查看文件的所有者
+chown root ok.txt    把文件所有者改为root
+chgrp root ok.txt	 把文件的组改为root
+chown [owner]:[group] [name]    同时改变所有组和组 
+-R    递归
+usermod -g root tom    修改用户所在组	
+u:所有者  g:所有组  o:其他人  a:所有人
+chmod u=rwx,g=rx,o=x [name]
+chmod o+w [name]
+chmod a-x [name]
+r=4  w=2  x=1 rwx=4+2+1=7
+chmod 751 [name]
+// 任务调度
+/etc/crontab    任务调度文件
+crontab -e    设置个人任务调度
+*/1 * * * * ls -l /etc/ > /tmp/to.txt     每分钟执行一次ls -l /etc/ > /tmp/to.txt
+第一个*		一小时中第几分钟
+第二个*		一天中第几小时
+第三个*		一个月中第几天
+第四个*		一年的第几月
+第五个*		一周中星期几
+crontab -l    查看所有任务
+crontab -r    终止任务调度
+service crond restart    重启任务调度
+*/1 * * * * /root/test.sh
+lsblk -f    查看磁盘挂载
+// 添加磁盘
+1.在虚拟机添加磁盘
+2.分区    fdist /dev/sdb
+3.格式化    mkfs -t ext4 /dev/sdb1
+4.挂载    mount /dev/sdb1 /newdist
+5.永久挂载    vim /etc/fstab	添加
+/dev/sdb1     /newdist    ext4		defaults    0  0
+保存退出后  mount -a
+取消挂载    umount /dev/sdb1
+df -h    查看磁盘使用情况
+ll | grep "^-" | wc -l    统计一个目录下有多少个文件
+vi /etc/sysconfig/network-scripts/ifcfg-eth0    设置固定ip
+BOOTPROTO=static
+IPADDR=192.168.2.155
+ONBOOT=yes
+==============================
+ps    显示进程
+kill    终止进程
+killall		
+ps -aux | grep sshd    查看所有登录用户
+kill 4010    4010是进程号,可以踢用户
+kill -9 4090    强行关闭
+killall gedit    关闭所有记事本进程
+setup    图形化界面,可以设置ip,查看所有进程
+chkconfig --list	查看所有进程的详细信息
+chkconfig iptables --list	查看防火墙
+chkconfig --level 5 iptables off	运行级别为5时,关闭防火墙
+top    动态进程监控
+netstat -anp    查看系统所有网络服务
+netstat -anp | grep sshd    查看sshd
+rpm -qa | grep [name]    查看已经安装的rpm列表
+rpm -qi firefox    查看详细信息
+rpm -ql firefox    查看安装的位置
+rpm -e [name]   卸载
+rpm -e --nodeps [name]   强制卸载
+rpm -ivh [name]    安装
+vi /etc/profile    设置环境变量
+// shell
+set		输出shell中的所有变量
+// 定义变量
+#!/bin/sh
+a=100
+echo $a
+unset a		删除变量
+readonly a=100		常量
+A=`ls -l`		运行命令,把结果返回给A
+A=$(ls -l)
+/dev/shm    存储在内存中
+source /etc/profile    配置完环境变量,重载一下
+// 自定义全局变量
+vi /etc/profile
+TOMCAT_HOME=/opt/tomcat
+export TOMCAT_HOME
+source /etc/profile
+================================
+#!/bin/sh
+echo $0 $1 $2
+echo $*
+echo $@
+echo $#
+============================
+[root@centos1 ~]# ./test.sh 55 66 77
+./test.sh 55 66
+55 66 77
+55 66 77
+3
+=================
+// 预定义变量
+$$		当前进程的进程号
+$!		后台最后一个进程的进程号
+$?		最后一次执行的命令的返回状态,如果是0代表正确执行,非0则不正确
+// 运算符
+$((运算))
+$[运算]
+expr m + n
+expr m - n
+expr \*,/,%
+=======================
+[root@centos1 ~]# expr 5 \* 5
+25
+[root@centos1 ~]# echo $((5+6))
+11
+======================
+if [ ok = ok ]
+then
+	echo equal
+fi
+======================
+if [ 22 -ne 222 ]
+then
+	echo equal
+fi
+// 按照文件权限判断
+-r	-w	-x
+// 按照文件类型判断
+-e		文件存在
+-f		是常规文件
+-d		是一个目录
+======================
+#!/bin/sh
+if [ $1 -ge 60 ]
+then
+        echo good
+else
+        echo bad
+fi
+======================
+[root@centos1 ~]# ./test.sh 66
+good
+======================
+#!/bin/sh
+case $1 in
+1)
+echo 1
+;;
+2)
+echo 2
+;;
+*)
+echo none
+;;
+esac
+======================
+[root@centos1 ~]# ./test.sh 30
+none
+======================
+for data in $*
+do
+  echo $data
+done
+======================
+[root@centos1 ~]# ./test.sh 1 2 3 4 5
+1
+2
+3
+4
+5
+======================
+for ((i=0;i<5;i++))
+do
+  echo $i
+done
+======================
+[root@centos1 ~]# ./test.sh 
+0
+1
+2
+3
+4
+======================
+#!/bin/sh
+count=0
+while [ $count -lt 5 ]
+do
+  echo $count
+  count=$[$count+1]
+done
+// 读取控制台输入的值
+read -p "请输入一个数字" NUM
+echo $NUM
+========= 设置时间为10s
+read -t 10 -p "请输入一个数字" NUM
+echo $NUM
+// 函数
+
+

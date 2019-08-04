@@ -1,2 +1,10 @@
 // redhat一般自带gcc,可以编译c程序,编译c++需要先安装g++
 yum install gcc-c++
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "Hello, world!" << endl;
+    return 0;
+}
