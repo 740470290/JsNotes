@@ -1,0 +1,221 @@
+// 协同过滤(Collaborative Filtering, CF)
+基于近邻的协同过滤
+	基于用户(User-CF)
+	基于物品(Item-CF)
+基于模型的协同过滤
+	奇异值分解(SVD)
+	潜在语义分析(LSA)
+	支持向量机(SVM)
+// 监督学习,既有输入的数据,也有输出的数据
+输出被限制为有限的一组值时(离散数值),用分类算法:
+k近邻
+朴素贝叶斯
+逻辑回归
+支持向量机
+决策树
+输出可以具有范围内的任何数值时(连续数值),用回归算法:
+线性回归
+多项式回归
+// 无监督学习,只有输入的数据,不给结果数据
+聚类:
+k-Means
+关联规则学习:
+降维:
+SVD
+PCA
+// 强化学习,和环境交互,得到反馈,获得奖励或者惩罚,然后指导自己
+遗传算法
+// 神经网络和深度学习
+卷积神经网络(CNN)
+循环神经网络(RNN)
+// 集成学习,把多个机器学习的方法集成到一起用
+随机森林
+##最小二乘法
+import numpy as np  ##科学计算库 
+import scipy as sp  ##在numpy基础上实现的部分算法库
+import matplotlib.pyplot as plt ##绘图库
+from scipy.optimize import leastsq ##引入最小二乘法算法
+ 
+'''
+   设置样本数据，真实数据需要在这里处理
+'''
+##样本数据(Xi,Yi)，需要转换成数组(列表)形式
+Xi=np.array([6.19,2.51,7.29,7.01,5.7,2.66,3.98,2.5,9.1,4.2])
+Yi=np.array([5.25,2.83,6.41,6.71,5.1,4.23,5.05,1.98,10.5,6.3])
+ 
+'''
+  设定拟合函数和偏差函数
+  函数的形状确定过程：
+  1.先画样本图像
+  2.根据样本图像大致形状确定函数形式(直线、抛物线、正弦余弦等)
+'''
+ 
+##需要拟合的函数func :指定函数的形状
+def func(p,x):
+  k,b=p
+  return k*x+b
+ 
+##偏差函数：x,y都是列表:这里的x,y更上面的Xi,Yi中是一一对应的
+def error(p,x,y):
+  return func(p,x)-y
+ 
+'''
+  主要部分：附带部分说明
+  1.leastsq函数的返回值tuple，第一个元素是求解结果，第二个是求解的代价值(个人理解)
+  2.官网的原话（第二个值）：Value of the cost function at the solution
+  3.实例：Para=>(array([ 0.61349535, 1.79409255]), 3)
+  4.返回值元组中第一个值的数量跟需要求解的参数的数量一致
+'''
+ 
+#k,b的初始值，可以任意设定,经过几次试验，发现p0的值会影响cost的值：Para[1]
+p0=[1,20]
+ 
+#把error函数中除了p0以外的参数打包到args中(使用要求)
+Para=leastsq(error,p0,args=(Xi,Yi))
+ 
+#读取结果
+k,b=Para[0]
+print("k=",k,"b=",b)
+print("cost："+str(Para[1]))
+print("求解的拟合直线为:")
+print("y="+str(round(k,2))+"x+"+str(round(b,2)))
+ 
+'''
+  绘图，看拟合效果.
+  matplotlib默认不支持中文，label设置中文的话需要另行设置
+  如果报错，改成英文就可以
+'''
+ 
+#画样本点
+plt.figure(figsize=(8,6)) ##指定图像比例： 8：6
+plt.scatter(Xi,Yi,color="green",label="样本数据",linewidth=2) 
+ 
+#画拟合直线
+x=np.linspace(0,12,100) ##在0-15直接画100个连续点
+y=k*x+b ##函数式
+plt.plot(x,y,color="red",label="拟合直线",linewidth=2) 
+plt.legend(loc='lower right') #绘制图例
+plt.show()
+// np.gonfromtxt('data.csv',delimiter=',')    读取数据
+import numpy as np
+import matplotlib.pyplot as plt
+points=np.array([[1,1],[2,3],[3,2],[4,3]])
+# 提取2列数据
+x=points[:,0]
+y=points[:,1]
+# 画散点图
+# plt.scatter(x,y)
+# plt.show()
+# 定义损失函数
+def compute_cost(w,b,points):
+    total_cost=0
+    M=len(points)
+    for i in range(M):
+        x=points[i,0]
+        y=points[i,1]
+        total_cost+=(y-w*x-b)**2
+    return total_cost/M    
+# 定义拟合函数
+# 求均值
+def average(data):
+    sum=0
+    num=len(data)
+    for i in range(num):
+        sum+=data[i]
+    return sum/num    
+# 核心拟合函数
+def fit(points):
+    M=len(points)
+    x_bar=average(points[:,0])
+    sum_yx=0
+    sum_x2=0
+    sum_delta=0
+    for i in range(M):
+        x=points[i,0]
+        y=points[i,1]
+        sum_yx+=y*(x-x_bar)
+        sum_x2+=x**2
+    w=sum_yx/(sum_x2-M*(x_bar**2))
+    for i in range(M):
+        x=points[i,0]
+        y=points[i,1]
+        sum_delta+=(y-w*x)
+    b=sum_delta/M
+    return w,b
+w,b=fit(points)
+print(w)
+print(b)
+cost=compute_cost(w,b,points)
+print(cost)
+plt.scatter(x,y)
+pred_y=w*x+b
+plt.plot(x,pred_y,c='r')
+plt.show()
+'''
+$ python a.py
+0.5
+1.0
+0.375
+'''
+// 梯度下降方法
+import numpy as np
+import matplotlib.pyplot as plt
+points=np.array([[1,1],[2,3],[3,2],[4,3]])
+# 提取2列数据
+x=points[:,0]
+y=points[:,1]
+# 定义损失函数
+def compute_cost(w,b,points):
+    total_cost=0
+    M=len(points)
+    for i in range(M):
+        x=points[i,0]
+        y=points[i,1]
+        total_cost+=(y-w*x-b)**2
+    return total_cost/M    
+# 定义模型的超参数
+# 步长,初始值,迭代次数
+alpha=0.1
+initial_w=0
+initial_b=0
+num_iter=10
+# 梯度下降函数
+def grad_desc(points,alpha,initial_w,initial_b,num_iter):
+    w=initial_w
+    b=initial_b
+    # 定义一个list保存所有的损失函数值,用来显示下降的过程
+    cost_list=[]
+    for i in range(num_iter):
+        cost_list.append(compute_cost(w,b,points))
+        w,b=step_grad_desc(w,b,alpha,points)
+    return [w,b,cost_list]
+def step_grad_desc(current_w,current_b,alpha,points):
+    sum_grad_w=0
+    sum_grad_b=0
+    M=len(points)
+    for i in range(M):
+        x=points[i,0]
+        y=points[i,1]
+        sum_grad_w+=(current_w*x+current_b-y)*x
+        sum_grad_b+=current_w*x+current_b-y
+    # 当前梯度
+    grad_w=2/M*sum_grad_w
+    grad_b=2/M*sum_grad_b
+    # 梯度下降,更新当前的w和b
+    updated_w=current_w-alpha*grad_w
+    updated_b=current_b-alpha*grad_b
+    return updated_w,updated_b
+# 测试:运行梯度下降算法计算最优的w和b
+w,b,cost_list=grad_desc(points,alpha,initial_w,initial_b,num_iter)
+print(w)
+print(b)
+cost=compute_cost(w,b,points)
+print(cost)
+plt.plot(cost_list)
+plt.show()
+plt.scatter(x,y)
+pred_y=w*x+b
+plt.plot(x,pred_y,c='r')
+plt.show()
+// node rpc
+// https://www.cnblogs.com/vipzhou/p/6831718.html

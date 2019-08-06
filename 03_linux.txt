@@ -1,3 +1,6 @@
+// git远程连接
+ssh root@ip
+
 netstat -ntlp    查看所有tcp端口
 cat /etc/redhat-release    查看centos版本
 uname -a    查看内核版本
@@ -385,6 +388,19 @@ echo $NUM
 ========= 设置时间为10s
 read -t 10 -p "请输入一个数字" NUM
 echo $NUM
-// 函数
-
+// 系统函数
+$ basename 00_push.sh
+00_push.sh
+$ basename 00_push.sh .sh
+00_push
+$ dirname /c/Users/chenj/Desktop/JsNotes/00_push.sh
+/c/Users/chenj/Desktop/JsNotes
+#!/bin/bash
+function getSum(){
+    sum=$[$n1+$n2]
+    echo $sum
+}
+read -p "请输入第一个数:" n1
+read -p "请输入第二个数:" n2
+getSum $n1 $n2
 
