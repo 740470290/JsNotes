@@ -2194,6 +2194,70 @@ yum install -y make
 // 导出docker
 https://www.imooc.com/article/48652
 npm unpublish [name]    删除包
+// restful  面向资源
+restful API仅适用与业务非常简单的场景，比方说，就是为了提供少量数据表单的增删改查
+而这种场景实在是太过简单，实际中几乎找不到。
+基于文本从而导致API传输内容过于庞大；存在客户端易感知的延迟
+// rpc 面向过程
+RPC的主要目的只是获取由远程机器上的程序所执行的结果
+无论是Google、Amazon、netflix（据说很可能转向grpc），还是阿里
+实际上内部都是采用性能更高的RPC方式。而对外开放的才是RESTful。
+如果对性能有所要求，不妨试试基于二进制传输的RPC框架
+// node-rpc
+npm i jayson -S
+node server.js
+node client.js
+// server.js
+var jayson = require('jayson')
+// create a server
+const server = jayson.server({
+  add: function(args, callback) {
+    callback(null, args[0] + args[1]);
+  }
+});
+server.http().listen(3000);
+// client.js
+var jayson = require('jayson')
+const client = jayson.client.http({
+  port: 3000
+});
+// invoke "add"
+client.request('add', [1, 1], function(err, response) {
+  if(err) throw err;
+  console.log(response.result); // 2
+});
+// 简单的vue
+<div id="app">
+    <h1>{{id}}</h1>
+    <h1>{{name}}</h1>
+    <h1>{{age}}</h1>
+</div>
+<script>
+    function Vue(obj) {
+        var dom=document.querySelector(obj.el)
+        for(let i in obj.data){
+            this[i]=obj.data[i]
+        }
+        var html=dom.innerHTML
+        var RE = /\{\{((?:.|\r?\n)+?)\}\}/g;
+        // dom.innerHTML=html.replace(RE,123)
+        let tag;
+        while(tag=RE.exec(html)){
+            html=html.replace(tag[0],this[tag[0].slice(2,-2)])
+        }
+        dom.innerHTML=html
+    }
+    const vm=new Vue({
+        el:'#app',
+        data:{
+            id:1,
+            name:'tom',
+            age:15
+        }
+    })
+</script>
+
+
 
 
 
