@@ -2271,6 +2271,7 @@ webpack-dev-server --open --port 3000 --contentBase src --hot
 --port		指定端口
 --contentBase		打开时的路径
 --hot		热更新
+// js判断是电脑还是手机
 
 
 
