@@ -2129,6 +2129,33 @@ console.log(test(1))
 // git新建远程仓库
 https://www.cnblogs.com/gaoyuechen/p/10336738.html
 核心原理是--bare,生成空的仓库,文件夹名子类似runoob.git
+git clone git@192.168.2.101:/home/gitrepo/djDocument.git
+// 注意,用户是git,然后在/home/git/.ssh/authorized_keys中添加自己电脑的.ssh/id_rsa.pub中的公钥
+# 安装Git
+yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel git
+groupadd git
+useradd git -g git
+# 创建证书登录
+cd /home/git/
+mkdir .ssh
+touch .ssh/authorized_keys
+chmod 644 .ssh/authorized_keys
+# 初始化Git仓库
+cd /home
+mkdir gitrepo
+chown git:git gitrepo/
+cd gitrepo
+git init --bare runoob.git
+chown -R git:git runoob.git
+chmod 775 -R djDocument.git
+===============================
+git clone git@192.168.45.4:/home/gitrepo/runoob.git
+// 复制一个仓库git clone --bare my_project my_project.git
+my_project ==> my_project.git
+
+
+
+
 // nginx 负载均衡
 只需要在配置文件中简单的配置一下即可,5行代码左右
 upstream 127.0.0.1{
@@ -2272,6 +2299,14 @@ webpack-dev-server --open --port 3000 --contentBase src --hot
 --contentBase		打开时的路径
 --hot		热更新
 // js判断是电脑还是手机
+const isMobi = navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|wince)/i) !== null
+  if (isMobi) {
+	return config.mobile
+  } else {
+	return config.pc
+  }
+// node rpc
+// https://www.cnblogs.com/vipzhou/p/6831718.html
 
 
 

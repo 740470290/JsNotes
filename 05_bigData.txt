@@ -217,5 +217,13 @@ plt.scatter(x,y)
 pred_y=w*x+b
 plt.plot(x,pred_y,c='r')
 plt.show()
-// node rpc
-// https://www.cnblogs.com/vipzhou/p/6831718.html
+============================================================================================================
+# 训练模型
+from sklearn.linear_model import LinearRegression
+lr=LinearRegression()
+x_new=x.reshape(-1,1)
+y_new=y.reshape(-1,1)
+lr.fit(x_new,y_new)
+w=lr.coef_
+b=lr.intercept_
+print(w,b)
