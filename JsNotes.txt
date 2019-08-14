@@ -2152,10 +2152,6 @@ chmod 775 -R djDocument.git
 git clone git@192.168.45.4:/home/gitrepo/runoob.git
 // 复制一个仓库git clone --bare my_project my_project.git
 my_project ==> my_project.git
-
-
-
-
 // nginx 负载均衡
 只需要在配置文件中简单的配置一下即可,5行代码左右
 upstream 127.0.0.1{
@@ -2306,7 +2302,13 @@ const isMobi = navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|androi
 	return config.pc
   }
 // node rpc
-// https://www.cnblogs.com/vipzhou/p/6831718.html
+https://www.cnblogs.com/vipzhou/p/6831718.html
+// axios post application/x-www-form-urlencoded
+  axios.post('http://192.168.2.3:9527/yqdz/djdocument/authentication-center-ms/authentication/getPicAuthCode.do?telephone=17372798547',
+  {id:1},
+  {headers: {'content-type': 'application/x-www-form-urlencoded'}}).then(res=>{
+    console.log(res.data)
+  })
 
 
 
