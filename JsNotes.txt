@@ -6,7 +6,7 @@ before(app) {
   app.get('/goods', (req,res)=>{
     return res.json( goodsData )
   })
-//node.js跨域问题
+//node跨域问题
 res.writeHead(200, {'Content-Type': 'text/plain','Access-Control-Allow-Origin':'*'});
 // vue webpack打包静态资源路径错误,解决
 build/utils.js
@@ -2309,7 +2309,24 @@ https://www.cnblogs.com/vipzhou/p/6831718.html
   {headers: {'content-type': 'application/x-www-form-urlencoded'}}).then(res=>{
     console.log(res.data)
   })
-
+// 删除cookie
+document.cookie = 'token=;Max-Age=0'
+// chrome调试node代码
+node --inspect test.js
+// btoa,浏览器内置api,Basic  Authorization
+btoa('yqdz-djdocument:app123456')
+"eXFkei1kamRvY3VtZW50OmFwcDEyMzQ1Ng=="
+// 计算js执行时间
+var count=1000;
+var begin=new Date();
+for(var i=0;i<count;i++){
+document.createElement("div");
+}
+var end=new Date();
+var time=end-begin;
+console.log("time is="+time);
+// 解析vue源码
+https://ustbhuangyi.github.io/vue-analysis/vue-router/
 
 
 
