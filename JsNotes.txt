@@ -1337,6 +1337,55 @@ new Promise((resolve, reject) => {
 9.使用事件代理(事件委托)
 10.服务器压缩
 11.循环的时候,do..while,switch方法性能高,参数递减性能高,如果3个左右的循环,直接打印就行,别用循环.多次应用dom,用一个常量接住
+12.在函数中,尽量使用局部变量,不用全局变量
+13.DOM的api是一套接口,js,vbjs等都可以操作,很消耗性能
+14.不要遍历document.querySelectAll()这样的类数组,非常耗性能
+15.一次写多个css app.style.cssText='color:red;background:blue'
+16.var fragment=document.createDocumentFragment()
+appendDataToElement(fragment,data)
+document.getElementById('app').appendChild(fragment)
+产生的dom遍历和重排次数最少
+17.css选择器的规则是从右到左,速度排名:
+id > class > tag > *
+18.后代选择器最耗性能,如: html body ul li a {}
+19.不要使用*{margin:0; padding:0},可以使用body,li,p,h1{margin:0; padding:0}
+少用滤镜,阴影 => 背景图
+少用绝对定位
+20.循环的时候,递减循环更快
+不要使用for-in,除非遍历一个属性未知的对象
+21.if-else  最可能的条件放在首位
+22.比if-else switch更快的方法,自己创建一个表
+function(){
+  var results = [result0, result1, result2]
+  return results[value]
+}
+23.达夫装置,每次循环执行8次操作,如果循环次数是12次,只需要2次循环,8+4
+24.递归做缓存
+var count=0;
+function memfactorial(n){
+  count++;
+  if(!memfactorial.cache){
+    memfactorial.cache={
+      '0':1,
+      '1':1
+    }
+  }
+  if(!memfactorial.cache.hasOwnProperty(n)){
+    memfactorial.cache[n]=n*memfactorial(n-1)
+  }
+  return memfactorial.cache[n]
+}
+var a=memfactorial(6)
+var b=memfactorial(5)
+var c=memfactorial(4)
+console.log(count)
+25.正则表达式不要使用分支结构,改为字符集 cat|bat => [cb]at
+[\s\S]可以匹配任意字符
+26.动画元素用绝对定位,脱离文档流,可以避免页面的重排
+
+
+
+
 //读取文件,如果是图片或者文字就在页面展示,并且显示进度
 <input type="file" id="files-list">
 <div id="output"></div>
