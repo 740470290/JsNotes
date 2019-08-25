@@ -2376,9 +2376,25 @@ var time=end-begin;
 console.log("time is="+time);
 // 解析vue源码
 https://ustbhuangyi.github.io/vue-analysis/vue-router/
-
-
-
+// 箭头函数链式调用,柯里化
+const func = a => b => c => a + b + c;
+func(1)(2)(3);
+// => 6
+// 类似于
+const func = function (a) {
+    return function (b) {
+        return function (c) {
+            return a + b + c;
+        }
+    }
+}
+// windows创建局域网https
+1.控制面板>>程序和功能>>启用或关闭windows功能>>开启Internet Information Services
+2.控制面板>>管理工具>>Internet Information Services管理器
+3.服务器证书>>创建自签名证书
+4.网站>>绑定>>把签名加进去
+5.把签名导出为pfx文件
+6.在浏览器Internet设置中,导入受信任的证书,把文件导入进去
 
 
                         
