@@ -1,4 +1,4 @@
-pycharm配置 字体:24
+﻿pycharm配置 字体:24
 
 // webpack作为服务器,发送信息
 before(app) {
@@ -2395,9 +2395,31 @@ const func = function (a) {
 4.网站>>绑定>>把签名加进去
 5.把签名导出为pfx文件
 6.在浏览器Internet设置中,导入受信任的证书,把文件导入进去
+// node.js生成https
+openssl genrsa 1024 > /pathway/private.pem
+openssl req -new -key /pathway/private.pem -out /pathway/csr.pem
+openssl x509 -req -days 365 -in csr.pem -signkey /pathway/private.pem -out /pathway/file.crt
+参考网址:https://www.jb51.net/article/140590.html
+// socket发送视频
+socket.emit('sendVideo', blob);
+// 接收
+const socket = io.connect('wss://192.168.8.180');
+socket.on('video', function (data) {
+console.log(data);
+var blob = new Blob([data], { 'type' : 'video/ogg; codecs=opus' });
+var audioURL = window.URL.createObjectURL(blob);
+      console.log('audioURL=====',audioURL)
+        audio.src = audioURL;
+        audio.onloadeddata=audio.play
+});
+// 服务端node.js
+socket.on('sendVideo', function (data) {
+    console.log(data);
+    io.emit('video', data);
+  });
+https://scaledrone.github.io/webrtc/index.html#9398b
 
 
-                        
                         
                         
                         
