@@ -403,4 +403,64 @@ function getSum(){
 read -p "请输入第一个数:" n1
 read -p "请输入第二个数:" n2
 getSum $n1 $n2
+// ffmpeg 推流命令 -re很重要,可以保证推流的速度正常
+ffmpeg -re -i /download/input.mp4 -vcodec libx264 -acodec aac -f flv rtmp://192.168.2.101:1935/mylive/1
+// 复制视频源 无需转码
+ffmpeg -re -i /download/input.mp4 -vcodec copy -acodec copy -f flv rtmp://192.168.2.101:1935/mylive/1
+// hls 传输
+ffmpeg -re -i /download/input.mp4 -vcodec copy -acodec copy -f flv rtmp://192.168.2.101:1935/hls/stream
+
+
+// 浏览器播放rtmp协议视频,最后以flash形式播放,注意,必须设置flash为允许
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>使用video.js实现rtmp流的直播播放</title>
+    <!--引入播放器样式-->
+    <link href="http://vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
+    <!--引入播放器js-->
+    <script src="http://vjs.zencdn.net/5.19/video.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/videojs-flash@2/dist/videojs-flash.min.js"></script>
+</head>
+<body>
+<!--vjs-big-play-centered 播放按钮居中-->
+<!--poster默认的显示界面，就是还没点播放，给你显示的界面-->
+<!--controls 规定浏览器应该为视频提供播放控件-->
+<!--preload="auto" 是否提前加载-->
+<!--autoplay 自动播放-->
+<!--loop=true 自动循环-->
+<!--data-setup='{"example_option":true}' 可以把一些属性写到这个里面来，如data-setup={"autoplay":true}-->
+<video id="my-player" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" autoplay="autoplay"
+       poster="//vjs.zencdn.net/v/oceans.png" width="500" height="400" data-setup='{}'>
+    <!--src: 规定媒体文件的 URL  type:规定媒体资源的类型-->
+    <source src='rtmp://192.168.2.101:1935/mylive/1' type='rtmp/flv'/>
+</video>
+<script type="text/javascript">
+    // 设置flash路径,用于在videojs发现浏览器不支持HTML5播放器的时候自动唤起flash播放器
+    videojs.options.flash.swf = 'https://cdn.bootcss.com/videojs-swf/5.4.1/video-js.swf';
+    var player = videojs('my-player'); //my-player为页面video元素的id
+    player.play(); //播放
+//    1. 播放   player.play()
+//    2. 停止   player.pause()
+//    3. 暂停   player.pause()
+</script>
+</body>
+</html>
+// 手机播放hls视频,谷歌浏览器不支持,手机端浏览器,微信打开,都可以
+<video src="http://192.168.2.101/hls/stream.m3u8" controls></video>
+// 电脑播放hls文件
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.4/alt/video-js-cdn.min.css">
+</head>
+<body>
+<video id="example-video" controls autoplay>
+    <source src="http://192.168.2.101/hls/stream.m3u8" type="application/x-mpegURL" />
+</video>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.6.4/alt/video.core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js"></script>
+<script>
+var player = videojs('example-video');
+</script>
+// obs串流密钥,hls后面的地址就是密钥
+rtmp://192.168.2.101:1935/hls/stream		
 

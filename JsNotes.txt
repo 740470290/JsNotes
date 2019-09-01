@@ -2418,6 +2418,86 @@ socket.on('sendVideo', function (data) {
     io.emit('video', data);
   });
 https://scaledrone.github.io/webrtc/index.html#9398b
+// 观察者模式
+  class Subject{
+    constructor (){
+      this.state = 0
+      this.observers = []
+    }
+    getState(){
+      return this.state
+    }
+    setState(val){
+      this.state = val
+      this.notifyAllObservers()
+    }
+    // 添加观察者
+    attach(observer){
+      this.observers.push(observer)
+    }
+    // 通知观察者
+    notifyAllObservers(){
+      this.observers.forEach(item => {
+        item.update()
+      })
+    }
+  }
+
+  class BinaryObserver{
+    constructor (subject){
+      this.subject = subject
+      this.subject.attach(this)
+    }
+    update(){
+      const state = this.subject.getState()
+      const result = state + '的二进制是'+state.toString(2)
+      console.log(result)
+    }
+  }
+  class OctalObserver{
+    constructor (subject){
+      this.subject = subject
+      this.subject.attach(this)
+    }
+    update(){
+      const state = this.subject.getState()
+      const result = state + '的十进制是'+state.toString()
+      console.log(result)
+    }
+  }
+  class HexaObserver{
+    constructor (subject){
+      this.subject = subject
+      this.subject.attach(this)
+    }
+    update(){
+      const state = this.subject.getState()
+      const result = state + '的十六进制是'+state.toString(16)
+      console.log(result)
+    }
+  }
+  var SubjectOne = new Subject()
+  new BinaryObserver(SubjectOne)
+  new OctalObserver(SubjectOne)
+  new HexaObserver(SubjectOne)
+  SubjectOne.setState(1)
+// 原生node的http模块发送http请求
+var http = require('https');
+var i = 1000;
+var j = 0;
+function get(){
+    http.get('https://www.douyu.com/topic/dazhong?rid=290935',function(req,res){
+	// var html='';
+	// req.on('data',function(data){
+	// 	html+=data;
+	// });
+	// req.on('end',function(){
+	// 	console.info(html);
+	// });
+        console.log(j++)
+    })
+}
+setInterval(get,10)
 
 
                         
