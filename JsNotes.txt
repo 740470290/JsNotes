@@ -2498,6 +2498,10 @@ function get(){
     })
 }
 setInterval(get,10)
+// axios使用application/x-www-form-urlencode传输数据报错解决方案
+axios.post(url,{username:'tom',pwd:'123456'})改为
+axios.post(url,'username=tom&pwd=123456')
+
 
 
                         
