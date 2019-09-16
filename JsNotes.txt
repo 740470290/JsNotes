@@ -2196,7 +2196,7 @@ chown git:git gitrepo/
 cd gitrepo
 git init --bare runoob.git
 chown -R git:git runoob.git
-chmod 775 -R djDocument.git
+chmod 775 -R runoob.git
 ===============================
 git clone git@192.168.45.4:/home/gitrepo/runoob.git
 // 复制一个仓库git clone --bare my_project my_project.git
