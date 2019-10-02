@@ -2501,7 +2501,153 @@ setInterval(get,10)
 // axios使用application/x-www-form-urlencode传输数据报错解决方案
 axios.post(url,{username:'tom',pwd:'123456'})改为
 axios.post(url,'username=tom&pwd=123456')
-
+// js
+upLoad () {
+  const file = document.createElement('input')
+  file.type = 'file'
+  // file.accept = 'image/*'
+  this.file = file
+  file.click()
+  file.onchange = this.upLoadImg
+},
+upLoadImg () {
+  const formData = new FormData()
+  const file = this.file.files[0]
+  const fileName = file.name
+  formData.append('saveScene', '2')
+  formData.append('justSaveWebFile', 'V2')
+  formData.append('file', file)
+  const reImg = /(jpg|png|gif|jpeg)$/i
+  const reVideo = /(mp4|ogg|mov|avi|flv)$/i
+  const msg = this.WebSocketMsgIn
+  msg.msgFlag = 'public'
+  msg.toGroupId = 'jlkjxy01'
+  msg.msgId = Math.random().toString(16).substr(2)
+  if (reImg.test(fileName)) {
+    msg.contentType = 'pic'
+    ajax(config.MS_FILE + '/fileCenter/native/justSaveWebFileV2.do', formData).then(res => {
+      msg.content = res.data.msg
+      this.socket.send(JSON.stringify(msg))
+    })
+  } else if (reVideo.test(fileName)) {
+    msg.contentType = 'video'
+    const reader = new FileReader()
+    const video = document.createElement('video')
+    reader.readAsArrayBuffer(file)
+    reader.onload = () => {
+      const blob = new Blob([reader.result], { 'type': 'video/ogg; codecs=opus' })
+      video.src = window.URL.createObjectURL(blob)
+      video.play()
+      // video.style.display = 'none'
+      // this.$refs.show.appendChild(video)
+      // video.addEventListener('loadeddata', captureImage)
+      // setTimeout(captureImage, 2000)
+    }
+    const captureImage = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+      this.$refs.show.appendChild(canvas)
+      ajax(config.MS_FILE + '/fileCenter/native/justSaveWebFileV2.do', formData).then(res1 => {
+        msg.content = {videoPath: res1.data.msg}
+        canvas.toBlob(bold => {
+          bold.name = Math.random().toString().slice(2) + '.png'
+          formData.set('file', bold, Math.random().toString().slice(2) + '.png')
+          ajax(config.MS_FILE + '/fileCenter/native/justSaveWebFileV2.do', formData).then(res2 => {
+            msg.content.vodeoCover = res2.data.msg
+            msg.content = JSON.stringify(msg.content)
+            console.log(JSON.stringify(msg))
+            this.socket.send(JSON.stringify(msg))
+          })
+        })
+      })
+    }
+    video.addEventListener('loadeddata', captureImage)
+  }
+},
+// 获取斗鱼弹幕
+var socket = new WebSocket('wss://danmuproxy.douyu.com:8506/')
+var hex='8300000083000000b102000074797065403d6c6f67696e7265712f757365726e616d65403d71715f595a534b783832572f70617373776f7264403d313233343536373839303132333435362f726f6f6d6964403d3238383031362f64666c403d2f766572403d32303138303232322f61766572403d3231393033323130312f6374403d32352f00'
+var hex1='2c0000002c000000b102000074797065403d6a6f696e67726f75702f726964403d3238383031362f676964403d312f00'
+var hexBeat='1400000014000000b102000074797065403d6d726b6c2f00'
+socket.onopen=function () {
+    // 发送我是谁,我看哪个房间
+    socket.send(getBuffer(hex))
+    // 握手
+    socket.send(getBuffer(hex1))
+}
+socket.onmessage=function (event) {
+    var data = event.data
+    var reader = new FileReader()
+    reader.readAsText(data, 'utf-8')
+    reader.onload=function () {
+    var result = reader.result
+    var index1 = result.indexOf('nn@=')
+    var index2 = result.indexOf('txt@=')
+    var index3 = result.indexOf('/', index1)
+    var index4 = result.indexOf('/', index2)
+    var str = result.slice(index1+4,index3)+':'+result.slice(index2+5,index4)
+    console.log(str)
+    }
+}
+// 发送心跳消息,证明你是在线的,为了节省流量
+setInterval(function () {
+   socket.send(hexBeat)
+},30000)
+// 16进制转buffer
+function getBuffer(hex) {
+    var typedArray1 = new Uint8Array(hex.match(/[\da-f]{2}/gi).map(function (h) {
+          return parseInt(h, 16)
+        }))
+    return  typedArray1.buffer
+}
+hexBeat=getBuffer(hexBeat)
+// 搜索框
+<link rel="stylesheet" href="./static/css/bootstrap.min.css">
+  <style>
+    .box{
+      border: 1px solid rgb(123,157,212);
+      display: none;
+    }
+    .box>div{
+      padding-left: 12px;
+    }
+    .box>div:hover{
+      background: rgb(30,144,255);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div style="width: 600px;margin: 20px;display: flex">
+  <div style="flex: 1;">
+    <input type="text" class="form-control" id="d1" style="position: relative;z-index: 1">
+    <div class="box">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </div>
+  </div>
+  <div style="flex: 1">
+    <select name="" id="d2" class="form-control" style="position: relative;bottom: 0px;z-index: 0">
+    <option value="">1</option>
+    <option value="">2</option>
+    <option value="">3</option>
+  </select>
+  </div>
+</div>
+<script>
+  var d1=document.getElementById('d1')
+  var d2=document.getElementById('d2')
+  var box=document.querySelector('.box')
+  d1.onfocus=function () {
+    box.style.display = 'block'
+  }
+  d1.onblur=function () {
+    box.style.display = 'none'
+  }
+</script>
 
 
                         

@@ -1,0 +1,24 @@
+// 控制台键盘输入
+Scanner sc = new Scanner(System.in);
+String str = sc.next();
+System.out.println(str);
+// 随机数
+Random r = new Random();
+int num = r.nextInt();
+System.out.println(num);
+// [0,10)
+int num = r.nextInt(10);
+// ArrayList只能存引用类型,基本类型需要转换一下
+ArrayList<String> list = new ArrayList<>(20);
+list.add("apple");
+System.out.println(list.get(0));
+System.out.println(list.remove(0));
+System.out.println(list.size());
+// 基本类型
+ArrayList<Integer> list1 = new ArrayList<>();
+list1.add(100);
+System.out.println(list1);
+// 数组
+int[] arr = new int[10];
+int[] arr1 = {1,2,3,4,5};
+System.out.println(arr.length);
